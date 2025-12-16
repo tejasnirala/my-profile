@@ -13,12 +13,12 @@ type HeaderProps = {
 export const Header = ({ activeTab, setActiveTab, darkMode, toggleTheme }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
-        <div className="flex items-center gap-2 font-bold text-xl tracking-tight cursor-pointer" onClick={() => setActiveTab('about')}>
+      <div className="container mx-auto flex flex-col gap-4 md:gap-0 md:flex-row min-h-16 items-center justify-between px-4 md:px-8">
+        <div className="mt-1 md:mt-0 flex items-center gap-2 font-bold text-xl tracking-tight cursor-pointer" onClick={() => setActiveTab('about')}>
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
             TN
           </div>
-          <span className="hidden sm:inline-block">{PROFILE.name}</span>
+          <span className="sm:inline-block">{PROFILE.name}</span>
         </div>
 
         <nav className="flex items-center gap-1 sm:gap-4">

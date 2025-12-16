@@ -7,7 +7,7 @@ export const PROFILE = {
   socials: {
     linkedin: "linkedin.com/in/tejas-nirala",
     github: "github.com/tejasnirala", 
-    leetcode: "leetcode.com/u/tejas_nirala"
+    takeuforward: "takeuforward.org/profile/tejas_nirala"
   },
   about: "Full Stack Developer with 2 years of experience in scalable UI engineering and system architecture. Recognized for contributions to agile product delivery across different sectors. Achievements include reducing blockchain processing time by 15% through SDK revamp and decreasing stakeholder clarification requests by 40% via detailed documentation practices.",
   skills: {

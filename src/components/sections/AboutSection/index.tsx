@@ -25,8 +25,8 @@ export const AboutSection = () => {
             <Button variant="outline" onClick={() => window.open(`https://${PROFILE.socials.linkedin}`)}>
               <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
             </Button>
-            <Button variant="outline" onClick={() => window.open(`https://${PROFILE.socials.leetcode}`)}>
-              <Code2 className="mr-2 h-4 w-4" /> LeetCode
+            <Button variant="outline" onClick={() => window.open(`https://${PROFILE.socials.takeuforward}`)}>
+              <Code2 className="mr-2 h-4 w-4" /> TakeUForward
             </Button>
             <Button variant="outline" onClick={() => window.open(`https://${PROFILE.socials.github}`)}>
               <Github className="mr-2 h-4 w-4" /> GitHub
