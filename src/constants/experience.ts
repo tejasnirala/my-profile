@@ -5,6 +5,10 @@ export const EXPERIENCE = [
     period: "Jun 2025 - Present",
     location: "Jaipur, Rajasthan",
     projects: [
+      // {
+      //   name: "OGR: Coupon Code Platform",
+      //   achievements: []
+      // },
       {
         name: "KBAI: Business AI Platform",
         achievements: [

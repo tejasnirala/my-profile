@@ -43,21 +43,27 @@ export const AboutSection = () => {
           </CardHeader>
           <CardContent className="grid gap-4">
             <div>
-              <p className="text-sm font-medium mb-2">Core</p>
+              <p className="text-sm font-medium mb-2 font-semibold">Languages</p>
               <div className="flex flex-wrap gap-2">
                 {PROFILE.skills.languages.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
               </div>
             </div>
             <div>
-              <p className="text-sm font-medium mb-2">Frontend</p>
+              <p className="text-sm font-medium mb-2 font-semibold">Core</p>
               <div className="flex flex-wrap gap-2">
-                {['Next.js', 'React', 'Tailwind', 'Shadcn'].map(s => <Badge key={s} variant="outline">{s}</Badge>)}
+                {PROFILE.skills.core.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
               </div>
             </div>
             <div>
-              <p className="text-sm font-medium mb-2">Backend & DevOps</p>
+              <p className="text-sm font-medium mb-2 font-semibold">Frontend</p>
               <div className="flex flex-wrap gap-2">
-                {['Node.js', 'Docker', 'AWS', 'SQL'].map(s => <Badge key={s} variant="outline">{s}</Badge>)}
+                {PROFILE.skills.frontend.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
+              </div>
+            </div>
+            <div>
+              <p className="text-sm font-medium mb-2 font-semibold">Backend & DevOps</p>
+              <div className="flex flex-wrap gap-2">
+                {PROFILE.skills.backendAndDevops.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
               </div>
             </div>
           </CardContent>

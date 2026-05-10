@@ -3,13 +3,13 @@ export const PROJECTS = [
     title: "KBAI: Business AI Platform",
     description: "A comprehensive business AI platform focusing on scalable UI and secure access.",
     tags: ["NextJs", "MUI", "Cypress", "Auth0", "i18n"],
-    link: "https://stage-kbai.aionsoft.it"
+    link: "https://app-kbai.aionsoft.it"
   },
   {
     title: "Cablinks HR System",
     description: "End-to-end accounting and HR management system handling inventory, billing, and payroll for 1000+ users.",
     tags: ["NodeJs", "Mongoose", "Payroll Logic", "Team Lead"],
-    link: "http://16.170.245.95:3005"
+    link: "https://cablinks.org/"
   },
   {
     title: "Skuchain SDK Revamp",
