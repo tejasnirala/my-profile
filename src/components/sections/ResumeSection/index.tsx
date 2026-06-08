@@ -1,5 +1,5 @@
 import React from 'react';
-import { Download, MapPin, Briefcase } from 'lucide-react';
+import { Download, MapPin, Briefcase, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Separator } from '@/components/ui/Separator';
@@ -104,6 +104,17 @@ export const ResumeSection = () => {
             <div className="text-sm text-muted-foreground">
               {cert.description}
             </div>
+
+            {cert.file && (
+              <a
+                href={cert.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+              >
+                <ExternalLink className="h-4 w-4" /> View Certificate
+              </a>
+            )}
           </div>
         ))}
       </div>
