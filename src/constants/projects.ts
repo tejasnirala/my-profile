@@ -7,7 +7,7 @@ export const PROJECTS = [
   },
   {
     title: "Cablinks HR System",
-    description: "End-to-end accounting and HR management system handling inventory, billing, and payroll for 1000+ users.",
+    description: "End-to-end accounting and HR management system handling inventory, billing, and payroll for 500+ users.",
     tags: ["NodeJs", "Mongoose", "Payroll Logic", "Team Lead"],
     link: "https://cablinks.org/"
   },
