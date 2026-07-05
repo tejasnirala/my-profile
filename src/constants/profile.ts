@@ -1,6 +1,7 @@
 export const PROFILE = {
   name: "Tejas Nirala",
   title: "Full Stack Developer",
+  url: "https://niralas.in",
   email: "tejasnirala4@gmail.com",
   phone: "+91-9771957520",
   location: "Jaipur, Rajasthan",

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { PROFILE } from "../constants/profile";
+import { EXPERIENCE } from "../constants/experience";
+import { EDUCATION } from "../constants/education";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,19 +15,99 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const allSkills = Object.values(PROFILE.skills).flat();
+
+const description =
+  "Tejas Nirala is a Full Stack Developer based in Jaipur, India with 2.5+ years of experience building scalable web applications with Next.js, React, TypeScript, and Node.js. Explore his projects, resume, and experience.";
+
 export const metadata: Metadata = {
-  title: "Tejas Nirala",
-  description: "Tejas Nirala - Portfolio",
-  icons: {
-    icon: '/tejas_01.jpg',
+  metadataBase: new URL(PROFILE.url),
+  title: {
+    default: `${PROFILE.name} — ${PROFILE.title}`,
+    template: `%s | ${PROFILE.name}`,
+  },
+  description,
+  keywords: [
+    PROFILE.name,
+    "Full Stack Developer",
+    "Software Engineer",
+    "Frontend Developer",
+    "React Developer",
+    "Next.js Developer",
+    "Portfolio",
+    "Jaipur",
+    ...allSkills,
+  ],
+  authors: [{ name: PROFILE.name, url: PROFILE.url }],
+  creator: PROFILE.name,
+  applicationName: `${PROFILE.name} Portfolio`,
+  alternates: {
+    canonical: "/",
+  },
+  verification: {
+    // Get this from Google Search Console → Settings → Ownership verification →
+    // HTML tag, then set GOOGLE_SITE_VERIFICATION in your env (e.g. Vercel project
+    // env vars). Until set, no verification tag is emitted.
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
   openGraph: {
-    title: 'Tejas Nirala',
-    description: 'Tejas Nirala - Software Engineer',
-    url: 'https://niralas.in',
-    siteName: 'Tejas Nirala',
-    locale: 'en_US',
+    type: "profile",
+    title: `${PROFILE.name} — ${PROFILE.title}`,
+    description,
+    url: PROFILE.url,
+    siteName: PROFILE.name,
+    locale: "en_US",
+    firstName: "Tejas",
+    lastName: "Nirala",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${PROFILE.name} — ${PROFILE.title}`,
+    description,
+  },
+  category: "technology",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: PROFILE.name,
+  url: PROFILE.url,
+  jobTitle: PROFILE.title,
+  email: `mailto:${PROFILE.email}`,
+  telephone: PROFILE.phone,
+  description: PROFILE.about,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Jaipur",
+    addressRegion: "Rajasthan",
+    addressCountry: "IN",
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: EXPERIENCE[0]?.company,
+  },
+  alumniOf: EDUCATION.filter((e) => e.school.includes("University")).map((e) => ({
+    "@type": "CollegeOrUniversity",
+    name: e.school,
+  })),
+  knowsAbout: allSkills,
+  sameAs: [
+    `https://${PROFILE.socials.linkedin}`,
+    `https://${PROFILE.socials.github}`,
+    `https://${PROFILE.socials.takeuforward}`,
+  ],
 };
 
 export default function RootLayout({
@@ -56,6 +139,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         {children}
       </body>
     </html>

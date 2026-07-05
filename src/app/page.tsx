@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { AboutSection } from '../components/sections/AboutSection';
@@ -18,10 +18,20 @@ export default function Portfolio() {
       <Header activeTab={activeTab} setActiveTab={setActiveTab} darkMode={darkMode} toggleTheme={toggleTheme} />
 
       <main className="flex-1 container mx-auto px-4 py-8 md:px-8 md:py-12 max-w-5xl animate-in fade-in duration-500">
-        {activeTab === "about" && <AboutSection />}
-        {activeTab === "resume" && <ResumeSection />}
-        {activeTab === "projects" && <ProjectsSection />}
-        {activeTab === "contact" && <ContactSection />}
+        {/* All sections render into the HTML so search engines can index every
+            section; inactive tabs are visually hidden rather than unmounted. */}
+        <section aria-label="About" hidden={activeTab !== "about"}>
+          <AboutSection />
+        </section>
+        <section aria-label="Resume" hidden={activeTab !== "resume"}>
+          <ResumeSection />
+        </section>
+        <section aria-label="Projects" hidden={activeTab !== "projects"}>
+          <ProjectsSection />
+        </section>
+        <section aria-label="Contact" hidden={activeTab !== "contact"}>
+          <ContactSection />
+        </section>
       </main>
 
       <Footer />
