@@ -7,15 +7,16 @@ export const PROFILE = {
   location: "Jaipur, Rajasthan",
   socials: {
     linkedin: "linkedin.com/in/tejas-nirala",
-    github: "github.com/tejasnirala", 
+    github: "github.com/tejasnirala",
     takeuforward: "takeuforward.org/profile/tejas_nirala"
   },
-  about: "Software Engineer with 2.5 years of experience in scalable UI engineering and system architecture. Recognized for contributions to agile product delivery across different sectors. Achievements include reducing blockchain processing time by 15% through SDK revamp and decreasing stakeholder clarification requests by 40% via detailed documentation practices.",
-  skills: {
-    languages: ["TypeScript", "JavaScript", "SQL", "C++", "Python"],
-    core: ["DSA", "Database Management", "REST API", "Testing (Jest, Cypress)"],
-    frontend: ["NextJs", "ReactJs", "Redux", "TailwindCSS", "MUI", "Shadcn"],
-    backendAndDevops: ["Node.js", "Flask", "Docker", "AWS EC2", "GitHub Actions", "Redis", "Git", "Jira"]
-  }
+  about: "Software Engineer specializing in React and Node.js with 2.8 years architecting scalable SaaS, enterprise, and blockchain platforms across fintech, supply chain, and HR domains. I own features end-to-end — from system design to delivery — building performant frontend systems, designing distributed backend services, and driving measurable improvements in reliability, security, and team productivity.",
+  skills: [
+    { label: "Languages", items: ["C++", "TypeScript", "JavaScript", "Python", "SQL"] },
+    { label: "Frontend", items: ["React.js", "Next.js", "Redux", "Tailwind CSS", "MUI", "Shadcn/ui"] },
+    { label: "Backend & Databases", items: ["Node.js", "REST APIs", "MongoDB", "PostgreSQL", "Redis"] },
+    { label: "Cloud Infrastructure", items: ["AWS EC2", "S3", "IAM", "CloudWatch"] },
+    { label: "DevOps", items: ["Docker", "CI/CD Pipeline", "Nginx", "Git", "Postman"] },
+    { label: "AI-Assisted Development", items: ["Claude Code", "Cursor", "Antigravity", "ChatGPT"] },
+  ]
 };
-

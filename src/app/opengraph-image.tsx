@@ -6,11 +6,11 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpengraphImage() {
-  const topSkills = [
-    ...PROFILE.skills.frontend.slice(0, 3),
-    ...PROFILE.skills.backendAndDevops.slice(0, 2),
-    ...PROFILE.skills.languages.slice(0, 2),
-  ];
+  // Curated marquee set for the share card, filtered to skills actually listed.
+  const allSkills = PROFILE.skills.flatMap((group) => group.items);
+  const topSkills = ["React.js", "Next.js", "Node.js", "TypeScript", "AWS EC2", "Docker", "MongoDB"].filter(
+    (s) => allSkills.includes(s),
+  );
 
   return new ImageResponse(
     (

@@ -17,10 +17,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const allSkills = Object.values(PROFILE.skills).flat();
+const allSkills = PROFILE.skills.flatMap((group) => group.items);
 
 const description =
-  "Tejas Nirala is a Full Stack Developer based in Jaipur, India with 2.5+ years of experience building scalable web applications with Next.js, React, TypeScript, and Node.js. Explore his projects, resume, and experience.";
+  "Software Engineer based in India with around 3 years of experience building scalable web applications with Next.js, React, TypeScript, and Node.js. Explore his projects, resume, and experience.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(PROFILE.url),

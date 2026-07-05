@@ -1,28 +1,25 @@
 export const EXPERIENCE = [
   {
     company: "Briskcovey Technologies",
-    role: "Full Stack Developer",
+    role: "Full Stack Engineer",
     period: "Jun 2025 - Present",
     location: "Jaipur, Rajasthan",
     projects: [
-      // {
-      //   name: "OGR: Coupon Code Platform",
-      //   achievements: []
-      // },
       {
         name: "KBAI: Business AI Platform",
         achievements: [
-          "Developed and maintained modular, reusable, and scalable UI components via MUI library to ensure consistency and reduce code duplication across the application by 40%.",
-          "Enhanced UI responsiveness by implementing code-splitting, lazy loading, debounced input handling, and component memoization, achieving a 35% faster initial load time.",
-          "Engineered fine-grained, scalable Role-Based Access Control (RBAC) on the frontend to handle permissions at page, component, and API levels.",
-          "Implemented internationalization (i18n) for multi-language support and spearheaded Auth0-based login integration."
+          "Architected modular, reusable, and scalable UI components using the MUI library, enforcing consistent design patterns across the platform and reducing code duplication by 25%.",
+          "Engineered frontend performance improvements — code-splitting, lazy loading, debounced input handling, and component memoization — reducing initial load time by 40%.",
+          "Designed fine-grained Role-Based Access Control (RBAC) at page, component, and API levels, reducing unnecessary API calls by 30%.",
+          "Owned end-to-end Auth0-based authentication integration with JSON Web Tokens (JWT), enhancing system security and reducing authentication-related errors by 20%.",
+          "Implemented internationalization (i18n) to enable multi-language support, adding 2 languages and expanding platform accessibility to non-English speaking users."
         ]
       },
       {
         name: "Cablinks: HR and Accounting Management System",
         achievements: [
-          "Led a team of 3 developers to architect and consolidate the end-to-end accounting management system encompassing inventory control, quotation handling, billing processes, and transaction recording for 1000+ users.",
-          "Optimized the Payroll sub-module logic to ensure accurate salary calculations by integrating multi-factor inputs including attendance, allowances, taxes, and deductions, leading to a 20% reduction in errors."
+          "Led a team of 3 developers in architecting and delivering an end-to-end accounting management system covering inventory control, quotation handling, billing, and transaction recording for 500+ users.",
+          "Optimized the payroll sub-module with multi-factor salary computation (attendance, allowances, taxes, deductions), reducing payroll errors by 20%."
         ]
       }
     ]
@@ -34,16 +31,15 @@ export const EXPERIENCE = [
     location: "Mohali, Punjab",
     projects: [
       {
-        name: "Skuchain - Blockchain-Based Supply Chain",
+        name: "Skuchain - Blockchain-Based Supply Chain and Trade Finance Solutions",
         achievements: [
-          "Engineered a revamped SDK using OOPS, SOLID, and DRY principles, enabling a seamless migration from Cosmos-SDK to EVM based chain which improved the overall blockchain throughput 15%.",
-          "Created 20+ RESTful API endpoints and Payload CMS hooks for multi-tenant CMS, facilitating seamless data exchange and reducing blockchain processing latency by 12%.",
-          "Improved user experience with RBAC, reducing access-related support tickets by 30+.",
-          "Streamlined blockchain and database management workflows via Yargs CLI tool development; this minimized manual scripting efforts and reduced human error rates by 15%.",
-          "Authored detailed project documentation utilizing VitePress, decreasing clarification requests from stakeholders by 40%."
+          "Engineered a revamped SDK for a microservices-based distributed system, applying OOPs, SOLID, and DRY design patterns to migrate from Cosmos-SDK to an EVM-based chain, improving blockchain throughput by 15%.",
+          "Designed and built 20+ RESTful API endpoints and Payload CMS hooks for a multi-tenant CMS, facilitating seamless data exchange and reducing blockchain processing latency by 12% for faster transaction confirmation.",
+          "Streamlined blockchain and database management workflows via a Yargs CLI tool, minimizing manual scripting efforts and reducing human error rates during database updates by 15%.",
+          "Authored detailed project documentation with VitePress, decreasing clarification requests from stakeholders by 40% and accelerating onboarding for new team members.",
+          "Collaborated with teams across time zones on sprint planning, retrospectives, and daily standups to support monthly releases of 3+ features using Agile methodology."
         ]
       }
     ]
   }
 ];
-

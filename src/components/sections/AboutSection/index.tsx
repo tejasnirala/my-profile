@@ -42,30 +42,14 @@ export const AboutSection = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
-            <div>
-              <p className="text-sm font-medium mb-2 font-semibold">Languages</p>
-              <div className="flex flex-wrap gap-2">
-                {PROFILE.skills.languages.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
+            {PROFILE.skills.map(group => (
+              <div key={group.label}>
+                <p className="text-sm font-medium mb-2 font-semibold">{group.label}</p>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
+                </div>
               </div>
-            </div>
-            <div>
-              <p className="text-sm font-medium mb-2 font-semibold">Core</p>
-              <div className="flex flex-wrap gap-2">
-                {PROFILE.skills.core.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
-              </div>
-            </div>
-            <div>
-              <p className="text-sm font-medium mb-2 font-semibold">Frontend</p>
-              <div className="flex flex-wrap gap-2">
-                {PROFILE.skills.frontend.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
-              </div>
-            </div>
-            <div>
-              <p className="text-sm font-medium mb-2 font-semibold">Backend & DevOps</p>
-              <div className="flex flex-wrap gap-2">
-                {PROFILE.skills.backendAndDevops.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
-              </div>
-            </div>
+            ))}
           </CardContent>
         </Card>
       </div>
@@ -90,8 +74,8 @@ export const AboutSection = () => {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              Expert in building scalable UI libraries with React and MUI. 
-              Focus on performance metrics, reducing initial load times by 35% through code-splitting.
+              Expert in building scalable UI libraries with React and MUI.
+              Focus on performance metrics, reducing initial load times by 40% through code-splitting.
             </p>
           </CardContent>
         </Card>
