@@ -1,8 +1,7 @@
 import { ImageResponse } from "next/og";
 
-// 192 is a multiple of 48 (Google's recommended favicon grid) and doubles as a
-// crisp PWA icon size.
-export const size = { width: 192, height: 192 };
+// Rendered at 256 for a sharp master; browsers/Google downscale as needed.
+export const size = { width: 256, height: 256 };
 export const contentType = "image/png";
 
 export default function Icon() {
@@ -15,12 +14,13 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          // Dark background so the mark stays visible on Google's white results page.
+          // Dark rounded badge so the mark stays visible on Google's white results.
           background: "#0a0a0a",
+          borderRadius: 52,
           color: "#fafafa",
-          fontSize: 96,
-          fontWeight: 800,
-          letterSpacing: "-6px",
+          fontSize: 150,
+          fontWeight: 900,
+          letterSpacing: "-10px",
           fontFamily: "sans-serif",
         }}
       >
