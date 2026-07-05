@@ -19,8 +19,13 @@ const geistMono = Geist_Mono({
 
 const allSkills = PROFILE.skills.flatMap((group) => group.items);
 
+// Kept under ~155 chars so Google doesn't truncate it in search results.
 const description =
-  "Software Engineer based in India with around 3 years of experience building scalable web applications with Next.js, React, TypeScript, and Node.js. Explore his projects, resume, and experience.";
+  "Software Engineer with ~3 years building scalable SaaS, enterprise, and blockchain platforms using Next.js, React, TypeScript, and Node.js.";
+
+// Shorter still (~110 chars) for social cards, which often truncate near 125.
+const ogDescription =
+  "Software Engineer building scalable SaaS, enterprise & blockchain platforms with Next.js, React, and Node.js.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(PROFILE.url),
@@ -66,7 +71,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "profile",
     title: `${PROFILE.name} — ${PROFILE.title}`,
-    description,
+    description: ogDescription,
     url: PROFILE.url,
     siteName: PROFILE.name,
     locale: "en_US",
@@ -76,7 +81,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${PROFILE.name} — ${PROFILE.title}`,
-    description,
+    description: ogDescription,
   },
   category: "technology",
 };

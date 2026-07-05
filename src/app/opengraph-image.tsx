@@ -27,24 +27,42 @@ export default function OpengraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <div
+              style={{
+                width: "72px",
+                height: "72px",
+                borderRadius: "16px",
+                background: "#fafafa",
+                color: "#0a0a0a",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "34px",
+                fontWeight: 800,
+              }}
+            >
+              TN
+            </div>
+            <span style={{ fontSize: "30px", color: "#a1a1aa" }}>{PROFILE.url.replace("https://", "")}</span>
+          </div>
           <div
             style={{
-              width: "72px",
-              height: "72px",
-              borderRadius: "16px",
-              background: "#fafafa",
-              color: "#0a0a0a",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              fontSize: "34px",
-              fontWeight: 800,
+              gap: "12px",
+              fontSize: "26px",
+              color: "#fafafa",
+              padding: "12px 28px",
+              borderRadius: "999px",
+              border: "2px solid #3f3f46",
+              background: "#171717",
             }}
           >
-            TN
+            <div style={{ width: "13px", height: "13px", borderRadius: "999px", background: "#22c55e", display: "flex" }} />
+            Open to opportunities
           </div>
-          <span style={{ fontSize: "30px", color: "#a1a1aa" }}>{PROFILE.url.replace("https://", "")}</span>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
