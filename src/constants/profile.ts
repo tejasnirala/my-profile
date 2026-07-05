@@ -17,6 +17,5 @@ export const PROFILE = {
     { label: "Backend & Databases", items: ["Node.js", "REST APIs", "MongoDB", "PostgreSQL", "Redis"] },
     { label: "Cloud Infrastructure", items: ["AWS EC2", "S3", "IAM", "CloudWatch"] },
     { label: "DevOps", items: ["Docker", "CI/CD Pipeline", "Nginx", "Git", "Postman"] },
-    { label: "AI-Assisted Development", items: ["Claude Code", "Cursor", "Antigravity", "ChatGPT"] },
   ]
 };
