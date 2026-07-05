@@ -1,6 +1,6 @@
 import React from 'react';
 import { Download, MapPin, Briefcase, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
+import { buttonClasses } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Separator } from '@/components/ui/Separator';
 import { EXPERIENCE } from '@/constants/experience';
@@ -9,22 +9,17 @@ import { CERTIFICATION } from '@/constants/certification';
 import { HOBBIES } from '@/constants/hobbies';
 
 export const ResumeSection = () => {
-  const handleDownloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/Tejas_Nirala_Resume.pdf';
-    link.download = 'Tejas_Nirala_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold tracking-tight">Experience</h2>
-        <Button variant="outline" size="sm" className="gap-2" onClick={handleDownloadResume}>
+        <a
+          href="/Tejas_Nirala_Resume.pdf"
+          download
+          className={buttonClasses("outline", "sm", "gap-2")}
+        >
           <Download className="h-4 w-4" /> Download Resume
-        </Button>
+        </a>
       </div>
 
       <div className="space-y-10">

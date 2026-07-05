@@ -1,46 +1,50 @@
-import React from 'react';
-import { Moon, Sun } from 'lucide-react';
-import { Button } from '../../ui/Button';
+"use client";
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { buttonClasses } from '../../ui/Button';
+import { ThemeToggle } from '../ThemeToggle';
 import { PROFILE } from '../../../constants/profile';
 
-type HeaderProps = {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  darkMode: boolean;
-  toggleTheme: () => void;
-};
+const NAV_ITEMS = [
+  { label: 'About', href: '/' },
+  { label: 'Resume', href: '/resume' },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Contact', href: '/contact' },
+];
 
-export const Header = ({ activeTab, setActiveTab, darkMode, toggleTheme }: HeaderProps) => {
+export const Header = () => {
+  const pathname = usePathname();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto flex flex-col gap-4 md:gap-0 md:flex-row min-h-16 items-center justify-between px-4 md:px-8">
-        <div className="mt-1 md:mt-0 flex items-center gap-2 font-bold text-xl tracking-tight cursor-pointer" onClick={() => setActiveTab('about')}>
+        <Link href="/" className="mt-1 md:mt-0 flex items-center gap-2 font-bold text-xl tracking-tight">
           <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
             TN
           </div>
           <span className="sm:inline-block">{PROFILE.name}</span>
-        </div>
+        </Link>
 
         <nav className="flex items-center gap-1 sm:gap-4">
-          {['About', 'Resume', 'Projects', 'Contact'].map((item) => (
-            <Button
-              key={item}
-              variant={activeTab === item.toLowerCase() ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setActiveTab(item.toLowerCase())}
-              className="text-xs sm:text-sm transition-all cursor-pointer"
-            >
-              {item}
-            </Button>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isActive ? 'page' : undefined}
+                className={buttonClasses(isActive ? 'secondary' : 'ghost', 'sm', 'text-xs sm:text-sm transition-all')}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <div className="ml-2 pl-2 border-l border-border">
-            <Button variant="ghost" size="icon" onClick={toggleTheme} className="rounded-full h-8 w-8 cursor-pointer">
-              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
+            <ThemeToggle />
           </div>
         </nav>
       </div>
     </header>
   );
 };
-

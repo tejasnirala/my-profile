@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mail, Linkedin, Github, Code2, Terminal, Globe } from 'lucide-react';
-import { Button } from '../../ui/Button';
+import { buttonClasses } from '../../ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../../ui/Card';
 import { Badge } from '../../ui/Badge';
 import { Separator } from '../../ui/Separator';
@@ -19,18 +19,18 @@ export const AboutSection = () => {
             {PROFILE.about}
           </p>
           <div className="flex flex-wrap gap-4 pt-4">
-            <Button onClick={() => window.open(`mailto:${PROFILE.email}`)}>
+            <a href={`mailto:${PROFILE.email}`} className={buttonClasses()}>
               <Mail className="mr-2 h-4 w-4" /> Contact Me
-            </Button>
-            <Button variant="outline" onClick={() => window.open(`https://${PROFILE.socials.linkedin}`)}>
+            </a>
+            <a href={`https://${PROFILE.socials.linkedin}`} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline")}>
               <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
-            </Button>
-            <Button variant="outline" onClick={() => window.open(`https://${PROFILE.socials.takeuforward}`)}>
+            </a>
+            <a href={`https://${PROFILE.socials.takeuforward}`} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline")}>
               <Code2 className="mr-2 h-4 w-4" /> TakeUForward
-            </Button>
-            <Button variant="outline" onClick={() => window.open(`https://${PROFILE.socials.github}`)}>
+            </a>
+            <a href={`https://${PROFILE.socials.github}`} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline")}>
               <Github className="mr-2 h-4 w-4" /> GitHub
-            </Button>
+            </a>
           </div>
         </div>
         

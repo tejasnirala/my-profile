@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mail, Phone, Linkedin, Github } from 'lucide-react';
-import { Button } from '../../ui/Button';
+import { buttonClasses } from '../../ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../../ui/Card';
 import { PROFILE } from '../../../constants/profile';
 
@@ -43,14 +43,14 @@ export const ContactSection = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" onClick={() => window.open(`https://${PROFILE.socials.linkedin}`)}>
+            <a href={`https://${PROFILE.socials.linkedin}`} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline", "default", "h-auto py-4 flex flex-col gap-2")}>
               <Linkedin className="h-6 w-6" />
               <span>LinkedIn</span>
-            </Button>
-            <Button variant="outline" className="h-auto py-4 flex flex-col gap-2" onClick={() => window.open(`https://${PROFILE.socials.github}`)}>
+            </a>
+            <a href={`https://${PROFILE.socials.github}`} target="_blank" rel="noopener noreferrer" className={buttonClasses("outline", "default", "h-auto py-4 flex flex-col gap-2")}>
               <Github className="h-6 w-6" />
               <span>GitHub</span>
-            </Button>
+            </a>
           </div>
         </CardContent>
       </Card>

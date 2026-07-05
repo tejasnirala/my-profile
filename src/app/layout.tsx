@@ -4,6 +4,8 @@ import "./globals.css";
 import { PROFILE } from "../constants/profile";
 import { EXPERIENCE } from "../constants/experience";
 import { EDUCATION } from "../constants/education";
+import { Header } from "../components/layout/Header";
+import { Footer } from "../components/layout/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -143,7 +145,13 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <div className="min-h-screen w-full bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground transition-colors duration-300 flex flex-col">
+          <Header />
+          <main className="flex-1 container mx-auto px-4 py-8 md:px-8 md:py-12 max-w-5xl animate-in fade-in duration-500">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
