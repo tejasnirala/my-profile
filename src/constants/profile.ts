@@ -9,7 +9,7 @@ export const PROFILE = {
   email: "tejasnirala4@gmail.com",
   phone: "+91-9771957520",
   yearsOfExperience: YEARS_OF_EXPERIENCE,
-  location: "Jaipur, Rajasthan",
+  address: { city: "Jaipur", region: "Rajasthan", country: "India", countryCode: "IN" },
   socials: {
     linkedin: "linkedin.com/in/tejas-nirala",
     github: "github.com/tejasnirala",

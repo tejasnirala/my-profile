@@ -40,14 +40,15 @@ src/
 │   ├── layout/           Header, Footer, NavLinks (client), ThemeToggle (client)
 │   ├── sections/         One section per page: About, Resume, Projects, Contact
 │   └── ui/               Tiny local primitives: Button (+ buttonClasses), Card, Badge, Separator, TimelineItem
-├── constants/            ALL site content: profile (+ SOCIAL_LINKS, HIGHLIGHTS), experience (+ FEATURED_PROJECTS), education, certification, hobbies, contact
+├── constants/            ALL site content: profile (+ SOCIAL_LINKS, HIGHLIGHTS), experience (+ FEATURED_PROJECTS), education, certification, hobbies, contact, pages (the page registry)
 └── lib/
+    ├── pages.ts          `pageMetadata(id)` for each page.tsx, from the page registry
     ├── theme.ts          The whole theme: inline no-flash script, toggle, theme-color (localStorage key `theme`)
     └── motion.ts         `stagger(n)` for the `enter` entrance utility
 public/                   Resume PDF, certificate images/PDFs
 ```
 
-**Data flow:** `constants/*` → `components/sections/*` → `app/<route>/page.tsx`. Each `page.tsx` only exports `metadata` and renders its section. Content edits almost never need component changes.
+**Data flow:** `constants/*` → `components/sections/*` → `app/<route>/page.tsx`. Each `page.tsx` only exports `metadata = pageMetadata('<id>')` and renders its section. `constants/pages.ts` is the single list of pages; nav and sitemap read it too. Content edits almost never need component changes.
 
 ## Key conventions
 - **Server components by default.** Only `NavLinks` and `ThemeToggle` are `"use client"`. To style a link as a button, use `buttonClasses()` on an `<a>`/`<Link>` instead of `<Button>`, so the component stays server-rendered.

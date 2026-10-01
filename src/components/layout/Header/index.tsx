@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import { NavLinks } from '@/components/layout/NavLinks';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
+import { PAGES } from '@/constants/pages';
 import { PROFILE } from '@/constants/profile';
+
+// Only what the client needs: descriptions stay on the server.
+const NAV_ITEMS = PAGES.map(({ path, navLabel }) => ({ path, label: navLabel }));
 
 export const Header = () => {
   return (
@@ -18,7 +22,7 @@ export const Header = () => {
         </Link>
 
         <nav aria-label="Main" className="flex items-center gap-2">
-          <NavLinks />
+          <NavLinks items={NAV_ITEMS} />
           <div className="pl-2 border-l border-border">
             <ThemeToggle />
           </div>

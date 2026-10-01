@@ -1,6 +1,6 @@
 ---
 name: add-page
-description: Add a new route/page to the portfolio (e.g. /blog, /uses, /achievements) wired into nav, sitemap, metadata and content constants. Use when asked to add, create or remove a page or section of the site.
+description: Add a new route/page to the portfolio (e.g. /blog, /uses, /achievements) via the page registry, which wires nav, sitemap and metadata. Use when asked to add, create or remove a page or section of the site.
 ---
 
 # Add a page
@@ -34,27 +34,32 @@ export const UsesSection = () => {
 ```
 This must be a server component (no `"use client"`). Use semantic color tokens and ui primitives, and check it at mobile width.
 
-## 3. Route: `src/app/uses/page.tsx`
-```tsx
-import type { Metadata } from 'next';
-import { UsesSection } from '@/components/sections/UsesSection';
-
-export const metadata: Metadata = {
+## 3. Register it: `src/constants/pages.ts`
+Add `'uses'` to `PageId`, then add an entry to `PAGES` (array order is nav order):
+```ts
+{
+  id: 'uses',
+  path: '/uses',
+  navLabel: 'Uses',
   title: 'Uses',
-  description: '<≤155 chars, unique, mentions Tejas Nirala>',
-  alternates: { canonical: '/uses' },
-};
+  description: `Tools and setup ${PROFILE.name} uses as a ${PROFILE.title}.`, // ≤155 chars, unique
+},
+```
+Build names, titles and places from `PROFILE`; never hardcode them. This one entry puts the page in the nav (with the active pill), the sitemap and its own metadata. The header must still fit on a 375px phone in portrait (4 items plus the theme toggle today); if it doesn't, ask before redesigning the nav.
+
+## 4. Route: `src/app/uses/page.tsx`
+```tsx
+import { UsesSection } from '@/components/sections/UsesSection';
+import { pageMetadata } from '@/lib/pages';
+
+export const metadata = pageMetadata('uses');
 
 export default function UsesPage() {
   return <UsesSection />;
 }
 ```
 
-## 4. Wire it up
-- `src/components/layout/NavLinks/index.tsx`: add `{ label: 'Uses', href: '/uses' }` to `NAV_ITEMS`. The header must still fit on a 375px phone in portrait (it already has 4 items plus the theme toggle); if it doesn't, ask before redesigning the nav. The active-page pill follows `aria-current` automatically.
-- `src/app/sitemap.ts`: add `"/uses"` to the `routes` array.
-
 ## 5. Verify
 Run the `/verify` skill and confirm `/uses` shows as `○ (Static)` in the build output.
 
-**Removing a page** is the reverse: delete the route folder, section and constants file, and remove the route from `NAV_ITEMS` and `sitemap.ts`. Then grep for leftover imports and links (`grep -rn "/uses" src`).
+**Removing a page** is the reverse: delete the route folder, section and constants file, and remove its entry and id from `constants/pages.ts`. Then grep for leftover imports and links (`grep -rn "/uses" src`).

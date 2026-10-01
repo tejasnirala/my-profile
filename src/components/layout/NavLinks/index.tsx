@@ -5,12 +5,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { buttonClasses } from '@/components/ui/Button';
 
-const NAV_ITEMS = [
-  { label: 'About', href: '/' },
-  { label: 'Resume', href: '/resume' },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Contact', href: '/contact' },
-];
+type NavLinksProps = {
+  items: { path: string; label: string }[];
+};
 
 /**
  * Clips the full-width pill layer down to the active link. Clip-path stays on the
@@ -32,7 +29,7 @@ const placeIndicator = (nav: HTMLElement, indicator: HTMLElement, animate: boole
   nav.dataset.ready = '';
 };
 
-export const NavLinks = () => {
+export const NavLinks = ({ items }: NavLinksProps) => {
   const pathname = usePathname();
   const navRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLSpanElement>(null);
@@ -62,11 +59,11 @@ export const NavLinks = () => {
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-md bg-secondary opacity-0 transition-[clip-path] duration-250 ease-in-out motion-reduce:transition-none"
       />
-      {NAV_ITEMS.map((item) => (
+      {items.map((item) => (
         <Link
-          key={item.href}
-          href={item.href}
-          aria-current={pathname === item.href ? 'page' : undefined}
+          key={item.path}
+          href={item.path}
+          aria-current={pathname === item.path ? 'page' : undefined}
           className={buttonClasses(
             'ghost',
             'sm',

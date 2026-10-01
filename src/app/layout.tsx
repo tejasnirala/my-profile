@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     "React Developer",
     "Next.js Developer",
     "Portfolio",
-    "Jaipur",
+    PROFILE.address.city,
     ...allSkills,
   ],
   authors: [{ name: PROFILE.name, url: PROFILE.url }],
@@ -118,9 +118,9 @@ const jsonLd = {
   description: PROFILE.about,
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Jaipur",
-    addressRegion: "Rajasthan",
-    addressCountry: "IN",
+    addressLocality: PROFILE.address.city,
+    addressRegion: PROFILE.address.region,
+    addressCountry: PROFILE.address.countryCode,
   },
   worksFor: {
     "@type": "Organization",

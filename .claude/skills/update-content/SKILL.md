@@ -11,7 +11,7 @@ The site mirrors the resume. Most changes are data-only, in `src/constants/`. Th
 
 | Fact | Update in |
 |---|---|
-| Name, title, email, phone, location, socials | `constants/profile.ts`. Title also feeds page titles, OG image, manifest and JSON-LD automatically. Social URLs flow through `SOCIAL_LINKS` to the header buttons, contact card, footer and JSON-LD `sameAs`. |
+| Name, title, email, phone, address, socials | `constants/profile.ts`. Name, title and address also feed page descriptions (`constants/pages.ts`), the OG image, manifest and JSON-LD automatically. Social URLs flow through `SOCIAL_LINKS` to the header buttons, contact card, footer and JSON-LD `sameAs`. |
 | About paragraph | `constants/profile.ts` → `about` (also the JSON-LD `description`) |
 | **Years of experience** | `YEARS_OF_EXPERIENCE` in `constants/profile.ts` only. `about`, the site description (rounded, "~3 years") and the /resume description derive from it. |
 | Skills | `constants/profile.ts` `skills`. If a skill in `featuredSkills` (shown on the share image) is renamed or removed, update that list too. |

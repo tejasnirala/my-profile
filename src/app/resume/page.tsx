@@ -1,13 +1,7 @@
-import type { Metadata } from 'next';
 import { ResumeSection } from '@/components/sections/ResumeSection';
-import { PROFILE } from '@/constants/profile';
+import { pageMetadata } from '@/lib/pages';
 
-export const metadata: Metadata = {
-  title: 'Resume',
-  description:
-    `${PROFILE.name}'s professional experience, education, certifications, and skills. ${PROFILE.title} with ${PROFILE.yearsOfExperience} years building scalable web applications.`,
-  alternates: { canonical: '/resume' },
-};
+export const metadata = pageMetadata('resume');
 
 export default function ResumePage() {
   return <ResumeSection />;
