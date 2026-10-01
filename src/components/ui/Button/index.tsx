@@ -28,7 +28,7 @@ export const buttonClasses = (
   size: Size = "default",
   className = "",
 ) =>
-  `inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium select-none ring-offset-background transition-[color,background-color,border-color,scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`;
+  `inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium select-none ring-offset-background transition-[color,background-color,border-color,scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`;
 
 type ButtonProps = React.ComponentProps<"button"> & {
   variant?: Variant;

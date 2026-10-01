@@ -3,6 +3,7 @@ import { Mail, Linkedin, Github, Code2, Terminal, Globe } from 'lucide-react';
 import { buttonClasses } from '@/components/ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { Separator } from '@/components/ui/Separator';
 import { HIGHLIGHTS, PROFILE, SOCIAL_LINKS } from '@/constants/profile';
 import { stagger } from '@/lib/motion';
@@ -43,6 +44,7 @@ export const AboutSection = () => {
                   className={buttonClasses('outline')}
                 >
                   <Icon className="h-4 w-4" /> {link.label}
+                  <NewTabHint />
                 </a>
               );
             })}
@@ -52,7 +54,7 @@ export const AboutSection = () => {
         <div className="enter w-full md:w-80 shrink-0" style={stagger(3)}>
           <Card className="bg-secondary/20 border-border/50">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle as="h2" className="flex items-center gap-2">
                 <Code2 className="h-5 w-5 text-primary" />
                 Tech Stack
               </CardTitle>
@@ -60,10 +62,10 @@ export const AboutSection = () => {
             <CardContent className="grid gap-4">
               {PROFILE.skills.map(group => (
                 <div key={group.label}>
-                  <p className="text-sm font-semibold mb-2">{group.label}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {group.items.map(s => <Badge key={s} variant="secondary">{s}</Badge>)}
-                  </div>
+                  <h3 className="text-sm font-semibold mb-2">{group.label}</h3>
+                  <ul role="list" className="flex flex-wrap gap-2">
+                    {group.items.map(s => <li key={s}><Badge variant="secondary">{s}</Badge></li>)}
+                  </ul>
                 </div>
               ))}
             </CardContent>
@@ -79,7 +81,7 @@ export const AboutSection = () => {
           return (
             <Card key={highlight.title} className="reveal">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle as="h2" className="flex items-center gap-2">
                   <Icon className="h-5 w-5" /> {highlight.title}
                 </CardTitle>
               </CardHeader>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Mail, Phone, Linkedin, Github } from 'lucide-react';
 import { buttonClasses } from '@/components/ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { CONTACT } from '@/constants/contact';
 import { PROFILE, SOCIAL_LINKS } from '@/constants/profile';
 import { stagger } from '@/lib/motion';
@@ -13,19 +14,19 @@ const CARD_SOCIALS = [
 
 // Each row is one large tap target that opens the mail app or the dialer.
 const rowClasses =
-  'flex items-center gap-4 p-4 rounded-lg border bg-secondary/10 ring-offset-background transition-[background-color,border-color,scale] duration-150 ease-out hover:bg-secondary/40 motion-safe:active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
+  'flex items-center gap-4 p-4 rounded-lg border bg-secondary/10 ring-offset-background transition-[background-color,border-color,scale] duration-150 ease-out hover:bg-secondary/40 motion-safe:active:scale-[0.98] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2';
 
 export const ContactSection = () => {
   return (
     <div className="max-w-2xl mx-auto space-y-8">
       <div className="enter text-center space-y-2" style={stagger(0)}>
-        <h2 className="text-3xl font-bold tracking-tight">{CONTACT.heading}</h2>
+        <h1 className="text-3xl font-bold tracking-tight">{CONTACT.heading}</h1>
         <p className="text-muted-foreground">{CONTACT.intro}</p>
       </div>
 
       <Card className="enter" style={stagger(1)}>
         <CardHeader>
-          <CardTitle>{CONTACT.cardTitle}</CardTitle>
+          <CardTitle as="h2">{CONTACT.cardTitle}</CardTitle>
           <CardDescription>{CONTACT.cardDescription}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -60,6 +61,7 @@ export const ContactSection = () => {
               >
                 <Icon className="h-6 w-6" />
                 <span>{label}</span>
+                <NewTabHint />
               </a>
             ))}
           </div>

@@ -63,6 +63,15 @@ public/                   Resume PDF, certificate images/PDFs
 - **App icons:** `lib/brand-mark.tsx` draws the "TN" badge for `icon.tsx`, `apple-icon.tsx` and the PWA icons (`app/pwa-icon/[variant]`: 192, 512 and a maskable 512 listed in `manifest.ts`). Change the mark there.
 - **Responsive targets:** phones and tablets in portrait and landscape, plus desktop. `short:` is a custom variant for landscape phones (wide but under 32rem tall); `pointer-coarse:` gives 44px touch targets; `gutter` clears the notch.
 
+## Accessibility
+Target: **WCAG 2.2 AA** on every page, both themes, 320px wide upward.
+- Structure: one `<h1>` per page, no skipped levels, real lists (`role="list"` restores list semantics that Safari drops under Tailwind's `list-style: none`), landmarks `header`/`nav` (labelled)/`main`/`footer`, and a skip link to `#main`.
+- Contrast: text ≥ 4.5:1 (`--muted-foreground` was tuned for this on `--secondary` chips); the active nav page is shown by text contrast as well as the pill, plus an underline in forced-colors mode.
+- Focus: visible ring on everything interactive, `outline-hidden` (not `outline-none`) so it survives Windows High Contrast, and `scroll-padding-top` keeps focus clear of the sticky header.
+- Names: external links announce the new tab (`NewTabHint`), the resume link says "(PDF)", the theme toggle is "Dark mode" with `aria-pressed`.
+- Motion: every animation has a `prefers-reduced-motion` version; print styles disable reveals so the resume prints fully.
+- Verify with Chrome DevTools → Lighthouse → Accessibility (or the axe extension) on `pnpm build && pnpm start`, keyboard-only navigation, and VoiceOver.
+
 ## Gotchas
 - **Use pnpm only for installs.** Never run `npm install`/`npm i`, which updates only the stale `package-lock.json` and breaks the Vercel deploy (`ERR_PNPM_OUTDATED_LOCKFILE`). `pnpm-workspace.yaml` is git-ignored on purpose.
 - **Serwist is production-only.** `next.config.ts` skips the Serwist wrapper in dev, and `build` must keep `--webpack` (Serwist conflicts with Turbopack). To test offline/PWA behavior, run `pnpm build && pnpm start`, not `pnpm dev`. `public/sw.js` is generated and git-ignored.

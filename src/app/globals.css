@@ -64,7 +64,7 @@
   --secondary: 240 4.8% 95.9%;
   --secondary-foreground: 240 5.9% 10%;
   --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
+  --muted-foreground: 240 3.8% 44%; /* ≥4.5:1 on --background and --secondary (WCAG 1.4.3) */
   --accent: 240 4.8% 95.9%;
   --accent-foreground: 240 5.9% 10%;
   --destructive: 0 84.2% 60.2%;
@@ -121,6 +121,12 @@
     -webkit-tap-highlight-color: transparent; /* we give our own :active feedback */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    /* Keep focused and targeted elements clear of the sticky header (WCAG 2.4.11).
+       The header is two rows on phones, one row from md and on landscape phones. */
+    scroll-padding-top: 7.5rem;
+    @media (width >= 48rem), (orientation: landscape) and (max-height: 32rem) {
+      scroll-padding-top: 5rem;
+    }
   }
   body {
     @apply bg-background text-foreground;
@@ -140,10 +146,6 @@
   p,
   li {
     text-wrap: pretty;
-  }
-  /* Keep anchor targets clear of the sticky header */
-  :target {
-    scroll-margin-top: 6rem;
   }
 }
 
@@ -225,4 +227,16 @@
 ::view-transition-new(root) {
   animation-duration: 250ms;
   animation-timing-function: ease;
+}
+
+/* Print the resume fully: no half-revealed entries, no sticky header */
+@media print {
+  .enter,
+  .reveal,
+  .scroll-edge {
+    animation: none !important;
+  }
+  header {
+    position: static;
+  }
 }

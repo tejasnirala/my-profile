@@ -13,7 +13,7 @@ export const Header = () => {
       <div className="gutter container mx-auto flex flex-col gap-2 py-2 md:flex-row md:gap-0 md:py-0 short:flex-row short:py-1 min-h-16 short:min-h-12 items-center justify-between">
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-lg font-bold text-xl tracking-tight select-none transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex items-center gap-2 rounded-lg font-bold text-xl tracking-tight select-none transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
         >
           <span className="size-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
             TN

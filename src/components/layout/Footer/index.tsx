@@ -1,3 +1,4 @@
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { PROFILE, SOCIAL_LINKS } from '@/constants/profile';
 
 export const Footer = () => {
@@ -12,9 +13,10 @@ export const Footer = () => {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md px-2 py-1 pointer-coarse:py-3 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="rounded-md px-2 py-1 pointer-coarse:py-3 transition-colors hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
             >
               {link.label}
+              <NewTabHint />
             </a>
           ))}
         </nav>

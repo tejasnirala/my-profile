@@ -111,7 +111,7 @@ export const personJsonLd = {
   sameAs: SOCIAL_LINKS.map((link) => link.href),
 };
 
-const getPage = (id: PageId) => {
+export const getPage = (id: PageId) => {
   const page = PAGES.find((p) => p.id === id);
   if (!page) throw new Error(`Unknown page: ${id}`);
   return page;

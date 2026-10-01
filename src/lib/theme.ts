@@ -45,9 +45,19 @@ const applyTheme = (theme: Theme) => {
     .forEach((meta) => meta.setAttribute('content', THEME_COLORS[theme]));
 };
 
+/** Whether the page is currently dark. Client-only; the server assumes the default. */
+export const isDarkTheme = () => document.documentElement.classList.contains('dark');
+
+/** Calls `onChange` whenever the theme class on <html> changes. For `useSyncExternalStore`. */
+export const subscribeToTheme = (onChange: () => void) => {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  return () => observer.disconnect();
+};
+
 /** Flips the theme with a short whole-page crossfade where View Transitions exist. */
 export const toggleTheme = () => {
-  const next: Theme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+  const next: Theme = isDarkTheme() ? 'light' : 'dark';
 
   try {
     localStorage.setItem(THEME_STORAGE_KEY, next);

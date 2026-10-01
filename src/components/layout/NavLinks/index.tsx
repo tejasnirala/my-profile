@@ -67,7 +67,10 @@ export const NavLinks = ({ items }: NavLinksProps) => {
           className={buttonClasses(
             'ghost',
             'sm',
-            'relative px-2.5 text-xs sm:px-3 sm:text-sm aria-[current=page]:bg-secondary aria-[current=page]:text-secondary-foreground group-data-ready:aria-[current=page]:bg-transparent',
+            // Inactive links are muted and the active one is full-contrast, so the
+            // current page isn't signalled by the faint pill alone (WCAG 1.4.11);
+            // forced-colors mode drops backgrounds, so it gets an underline.
+            'relative px-2.5 text-xs sm:px-3 sm:text-sm text-muted-foreground hover:text-foreground aria-[current=page]:bg-secondary aria-[current=page]:text-foreground forced-colors:aria-[current=page]:underline group-data-ready:aria-[current=page]:bg-transparent',
           )}
         >
           {item.label}

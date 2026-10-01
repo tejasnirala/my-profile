@@ -2,12 +2,14 @@ import React from 'react';
 import { Download, MapPin, Briefcase, ExternalLink } from 'lucide-react';
 import { buttonClasses } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { Separator } from '@/components/ui/Separator';
 import { TimelineItem } from '@/components/ui/TimelineItem';
 import { EXPERIENCE } from '@/constants/experience';
 import { EDUCATION } from '@/constants/education';
 import { CERTIFICATIONS } from '@/constants/certification';
 import { HOBBIES } from '@/constants/hobbies';
+import { getPage } from '@/lib/seo';
 import { stagger } from '@/lib/motion';
 
 const sectionHeading = 'reveal text-3xl font-bold tracking-tight mb-6';
@@ -15,6 +17,9 @@ const sectionHeading = 'reveal text-3xl font-bold tracking-tight mb-6';
 export const ResumeSection = () => {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
+      {/* The page's visible sections are peers (Experience, Education…), so the
+          page title is the h1 for the heading outline, shown to screen readers only. */}
+      <h1 className="sr-only">{getPage('resume').title}</h1>
       <div className="enter flex flex-wrap items-center justify-between gap-4" style={stagger(0)}>
         <h2 className="text-3xl font-bold tracking-tight">Experience</h2>
         <a
@@ -24,10 +29,11 @@ export const ResumeSection = () => {
         >
           <Download className="h-4 w-4 transition-[translate] duration-200 ease-out motion-safe:group-hover:translate-y-0.5" />
           Download Resume
+          <span className="sr-only"> (PDF)</span>
         </a>
       </div>
 
-      <div className="enter space-y-10" style={stagger(1)}>
+      <ol role="list" className="enter space-y-10" style={stagger(1)}>
         {EXPERIENCE.map((exp) => (
           <TimelineItem key={`${exp.company}-${exp.role}`} title={exp.role} period={exp.period} subtitle={exp.company}>
             <div className="space-y-6">
@@ -37,7 +43,7 @@ export const ResumeSection = () => {
                     <Briefcase className="h-4 w-4 shrink-0 text-muted-foreground" />
                     {engagement.name}
                   </h4>
-                  <ul className="list-disc list-outside ml-4 space-y-1 text-sm text-muted-foreground">
+                  <ul role="list" className="list-disc list-outside ml-4 space-y-1 text-sm text-muted-foreground">
                     {engagement.achievements.map((ach) => (
                       <li key={ach} className="leading-relaxed">{ach}</li>
                     ))}
@@ -47,12 +53,12 @@ export const ResumeSection = () => {
             </div>
           </TimelineItem>
         ))}
-      </div>
+      </ol>
 
       <Separator className="my-8" />
 
       <h2 className={sectionHeading}>Education</h2>
-      <div className="space-y-10">
+      <ol role="list" className="space-y-10">
         {EDUCATION.map((edu) => (
           <TimelineItem key={edu.school} title={edu.degree} period={edu.period} subtitle={edu.school}>
             <p className="flex items-center text-sm text-muted-foreground">
@@ -60,12 +66,12 @@ export const ResumeSection = () => {
             </p>
           </TimelineItem>
         ))}
-      </div>
+      </ol>
 
       <Separator className="my-8" />
 
       <h2 className={sectionHeading}>Certifications & Awards</h2>
-      <div className="space-y-10">
+      <ol role="list" className="space-y-10">
         {CERTIFICATIONS.map((cert) => (
           <TimelineItem key={cert.name} title={cert.name} period={cert.period} subtitle={cert.institution}>
             <p className="text-sm text-muted-foreground">{cert.description}</p>
@@ -74,25 +80,29 @@ export const ResumeSection = () => {
                 href={cert.file}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 -mx-1 inline-flex items-center gap-1.5 rounded-md px-1 py-1 pointer-coarse:py-2.5 text-sm font-medium text-primary select-none hover:underline transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="mt-2 -mx-1 inline-flex items-center gap-1.5 rounded-md px-1 py-1 pointer-coarse:py-2.5 text-sm font-medium text-primary select-none hover:underline transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <ExternalLink className="h-4 w-4" /> View Certificate
+                <span className="sr-only">: {cert.name}</span>
+                <NewTabHint />
               </a>
             )}
           </TimelineItem>
         ))}
-      </div>
+      </ol>
 
       <Separator className="my-8" />
 
       <h2 className={sectionHeading}>Hobbies & Interests</h2>
-      <div className="reveal flex flex-wrap gap-3">
+      <ul role="list" className="reveal flex flex-wrap gap-3">
         {HOBBIES.map((hobby) => (
-          <Badge key={hobby} variant="secondary" className="text-base px-4 py-2 bg-secondary/80">
-            {hobby}
-          </Badge>
+          <li key={hobby}>
+            <Badge variant="secondary" className="text-base px-4 py-2 bg-secondary/80">
+              {hobby}
+            </Badge>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

@@ -58,7 +58,7 @@ export default function RootLayout({
         </a>
         <div className="min-h-svh w-full bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground flex flex-col">
           <Header />
-          <main id="main" className="flex-1 container mx-auto gutter py-8 md:py-12 short:py-6 max-w-5xl">
+          <main id="main" tabIndex={-1} className="flex-1 container mx-auto gutter py-8 md:py-12 short:py-6 max-w-5xl outline-hidden">
             {children}
           </main>
           <Footer />

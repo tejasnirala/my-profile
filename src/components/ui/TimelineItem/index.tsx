@@ -8,10 +8,10 @@ type TimelineItemProps = {
   children?: React.ReactNode;
 };
 
-/** One entry on the resume timeline: dot, title, period badge, subtitle, details. */
+/** One entry on the resume timeline. Render inside an `<ol>`. */
 export const TimelineItem = ({ title, period, subtitle, children }: TimelineItemProps) => (
-  <div className="reveal relative pl-8 border-l border-border pb-2 last:pb-0">
-    <div className="absolute left-[-5px] top-1 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-background" />
+  <li className="reveal relative pl-8 border-l border-border pb-2 last:pb-0">
+    <div aria-hidden className="absolute left-[-5px] top-1 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-background" />
 
     <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-1">
       <h3 className="text-xl font-bold tracking-[-0.01em] text-primary">{title}</h3>
@@ -21,5 +21,5 @@ export const TimelineItem = ({ title, period, subtitle, children }: TimelineItem
     <p className="text-lg font-semibold text-foreground">{subtitle}</p>
 
     {children && <div className="mt-3">{children}</div>}
-  </div>
+  </li>
 );

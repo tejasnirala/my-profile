@@ -24,10 +24,12 @@ export const CardHeader = ({ children, className = "" }: CardHeaderProps) => (
 type CardTitleProps = {
   children: React.ReactNode;
   className?: string;
+  /** Pick the level that continues the page's heading outline (default h3). */
+  as?: "h2" | "h3";
 };
 
-export const CardTitle = ({ children, className = "" }: CardTitleProps) => (
-  <h3 className={`text-2xl font-semibold leading-tight tracking-[-0.015em] ${className}`}>{children}</h3>
+export const CardTitle = ({ children, className = "", as: Heading = "h3" }: CardTitleProps) => (
+  <Heading className={`text-2xl font-semibold leading-tight tracking-[-0.015em] ${className}`}>{children}</Heading>
 );
 
 type CardDescriptionProps = {
