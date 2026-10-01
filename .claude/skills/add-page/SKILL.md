@@ -19,20 +19,32 @@ Keep data in constants, not in JSX.
 ```tsx
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import { USES } from '@/constants/uses';
+import { stagger } from '@/lib/motion';
 
 export const UsesSection = () => {
   return (
     <div className="space-y-8">
-      <div className="flex flex-col space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Uses</h2>
+      <div className="enter flex flex-col space-y-2" style={stagger(0)}>
+        <h1 className="text-3xl font-bold tracking-tight">Uses</h1>
         <p className="text-muted-foreground">Tools and setup I work with.</p>
       </div>
-      {/* render USES with ui primitives */}
+      <ul role="list" className="enter grid gap-6 sm:grid-cols-2" style={stagger(1)}>
+        {USES.map((group) => (
+          <li key={group.category} className="reveal">
+            <Card>
+              <CardHeader>
+                <CardTitle as="h2">{group.category}</CardTitle>
+              </CardHeader>
+              <CardContent>{/* items */}</CardContent>
+            </Card>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 ```
-This must be a server component (no `"use client"`). Use semantic color tokens and ui primitives, and check it at mobile width.
+This must be a server component (no `"use client"`). Use semantic color tokens and ui primitives. Follow the motion and accessibility rules in `.claude/rules/components.md`: the page's heading is its only `<h1>`, blocks above the fold use `enter` + `stagger(n)` in order, content below the fold uses `reveal`, lists are `<ul role="list">`, and `target="_blank"` links include `<NewTabHint />`. Check it at 320px wide, in both themes and with reduced motion on.
 
 ## 3. Register it: `src/constants/pages.ts`
 Add `'uses'` to `PageId`, then add an entry to `PAGES` (array order is nav order):
