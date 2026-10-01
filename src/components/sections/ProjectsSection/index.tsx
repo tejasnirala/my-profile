@@ -1,14 +1,14 @@
 import React from 'react';
 import { ExternalLink, FolderGit2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../../ui/Card';
-import { PROJECTS } from '../../../constants/projects';
+import { PROJECTS, PROJECTS_INTRO } from '../../../constants/projects';
 
 export const ProjectsSection = () => {
   return (
     <div className="space-y-8">
       <div className="flex flex-col space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Featured Projects</h2>
-        <p className="text-muted-foreground">A selection of projects I've engineered and led.</p>
+        <p className="text-muted-foreground">{PROJECTS_INTRO}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

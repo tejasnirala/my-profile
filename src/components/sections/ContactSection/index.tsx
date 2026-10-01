@@ -2,22 +2,21 @@ import React from 'react';
 import { Mail, Phone, Linkedin, Github } from 'lucide-react';
 import { buttonClasses } from '../../ui/Button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../../ui/Card';
+import { CONTACT } from '../../../constants/contact';
 import { PROFILE } from '../../../constants/profile';
 
 export const ContactSection = () => {
   return (
     <div className="max-w-2xl mx-auto space-y-8">
       <div className="text-center space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Get in Touch</h2>
-        <p className="text-muted-foreground">
-          Currently open for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-        </p>
+        <h2 className="text-3xl font-bold tracking-tight">{CONTACT.heading}</h2>
+        <p className="text-muted-foreground">{CONTACT.intro}</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Contact Details</CardTitle>
-          <CardDescription>Feel free to reach out through any of these platforms.</CardDescription>
+          <CardTitle>{CONTACT.cardTitle}</CardTitle>
+          <CardDescription>{CONTACT.cardDescription}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center space-x-4 p-4 rounded-lg border bg-secondary/10">
@@ -56,9 +55,7 @@ export const ContactSection = () => {
       </Card>
 
       <div className="text-center">
-        <p className="text-sm text-muted-foreground">
-          Looking forward to building something amazing together.
-        </p>
+        <p className="text-sm text-muted-foreground">{CONTACT.closing}</p>
       </div>
     </div>
   );

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { PROFILE } from "../constants/profile";
-import { EXPERIENCE } from "../constants/experience";
-import { EDUCATION } from "../constants/education";
-import { Header } from "../components/layout/Header";
-import { Footer } from "../components/layout/Footer";
+import { PROFILE, SOCIAL_LINKS } from "@/constants/profile";
+import { EXPERIENCE } from "@/constants/experience";
+import { EDUCATION } from "@/constants/education";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { themeScript } from "@/lib/theme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,7 +22,7 @@ const allSkills = PROFILE.skills.flatMap((group) => group.items);
 
 // Kept under ~155 chars so Google doesn't truncate it in search results.
 const description =
-  "Software Engineer with ~3 years building scalable SaaS, enterprise, and blockchain platforms using Next.js, React, TypeScript, and Node.js.";
+  `Software Engineer with ~${Math.round(PROFILE.yearsOfExperience)} years building scalable SaaS, enterprise, and blockchain platforms using Next.js, React, TypeScript, and Node.js.`;
 
 // Shorter still (~110 chars) for social cards, which often truncate near 125.
 const ogDescription =
@@ -110,11 +111,7 @@ const jsonLd = {
     name: e.school,
   })),
   knowsAbout: allSkills,
-  sameAs: [
-    `https://${PROFILE.socials.linkedin}`,
-    `https://${PROFILE.socials.github}`,
-    `https://${PROFILE.socials.takeuforward}`,
-  ],
+  sameAs: SOCIAL_LINKS.map((link) => link.href),
 };
 
 export default function RootLayout({
@@ -125,23 +122,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  const savedTheme = localStorage.getItem('theme');
-                  const isDark = savedTheme ? savedTheme === 'dark' : true;
-                  if (isDark) {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

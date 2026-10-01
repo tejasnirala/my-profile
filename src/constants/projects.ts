@@ -1,3 +1,5 @@
+export const PROJECTS_INTRO = "A selection of projects I've engineered and led.";
+
 export const PROJECTS = [
   {
     title: "KBAI: Business AI Platform",
