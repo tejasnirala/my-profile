@@ -11,7 +11,7 @@ Run these in order from the repo root and stop at the first real failure.
 2. **Lint:** `pnpm lint`
    - The baseline is **0 errors and 0 warnings**. Any new error or warning is a failure.
 3. **Build:** `pnpm build` (runs `next build --webpack`; this is what Vercel runs).
-   - Every route in the table must be `○ (Static)`. A `ƒ (Dynamic)` route is a regression.
+   - Every route in the table must be `○ (Static)` or `● (SSG)` (prerendered from `generateStaticParams`, e.g. `/pwa-icon/[variant]`). A `ƒ (Dynamic)` route is a regression.
    - Ignore the `baseline-browser-mapping … over two months old` warnings.
 4. **Lockfile sanity:** if `package.json` changed (`git diff --name-only`), `pnpm-lock.yaml` must also have changed, and `package-lock.json` must not.
 
