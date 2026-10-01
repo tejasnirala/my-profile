@@ -52,25 +52,11 @@ export const siteMetadata: Metadata = {
   authors: [{ name: PROFILE.name, url: PROFILE.url }],
   creator: PROFILE.name,
   applicationName: `${PROFILE.name} Portfolio`,
-  alternates: {
-    canonical: "/",
-  },
   verification: {
     // Get this from Google Search Console → Settings → Ownership verification →
     // HTML tag, then set GOOGLE_SITE_VERIFICATION in your env (e.g. Vercel project
     // env vars). Until set, no verification tag is emitted.
     google: process.env.GOOGLE_SITE_VERIFICATION,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
   },
   openGraph: {
     type: "profile",
@@ -131,13 +117,30 @@ const getPage = (id: PageId) => {
   return page;
 };
 
-/** Title, description and canonical URL for a page, from the page registry. */
+/**
+ * Indexing rules for real pages. Set per page, not site-wide, so the 404 page
+ * doesn't inherit `index` (or a canonical URL) on top of its own `noindex`.
+ */
+const INDEXABLE: Metadata["robots"] = {
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+    "max-video-preview": -1,
+  },
+};
+
+/** Title, description, canonical URL and indexing rules for a page, from the page registry. */
 export const pageMetadata = (id: PageId): Metadata => {
   const { path, title, description } = getPage(id);
   return {
     ...(title && { title }),
     ...(description && { description }),
     alternates: { canonical: path },
+    robots: INDEXABLE,
   };
 };
 

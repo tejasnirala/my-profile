@@ -41,3 +41,9 @@ export const PAGES: Page[] = [
     description: `Get in touch with ${PROFILE.name}, ${PROFILE.title} based in ${PROFILE.address.city}, ${PROFILE.address.country}. Open to new opportunities — reach out via email, LinkedIn, or GitHub.`,
   },
 ];
+
+/** Shown for any URL that isn't a page. */
+export const NOT_FOUND = {
+  title: 'Page not found',
+  message: "This page doesn't exist or has moved. Try one of these instead:",
+};

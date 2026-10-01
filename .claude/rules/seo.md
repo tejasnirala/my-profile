@@ -6,6 +6,7 @@ paths: ["src/app/**"]
 - Every page is registered in `constants/pages.ts` and its `page.tsx` exports `metadata = pageMetadata('<id>')`, which supplies `title` (the layout template appends ` | Tejas Nirala`), `description` and the canonical URL. Descriptions build names and places from `PROFILE`.
 - Description lengths: page and site descriptions **≤ 155 chars** (Google truncates beyond that); OG/Twitter descriptions **≤ 110 chars**. `lib/seo.ts` enforces both at build time.
 - Nav and `app/sitemap.ts` read the same registry, so adding a page is one entry (see the `/add-page` skill).
+- Canonical URLs and `robots: index` are set per page by `pageMetadata()`, never in the layout, so `app/not-found.tsx` stays `noindex` with no canonical URL (Next adds the `noindex` itself; don't add a second one).
 - Build absolute URLs from `PROFILE.url` (`metadataBase` is set in the layout). Never hardcode `tejas.niralas.in`.
 - The OG image (`opengraph-image.tsx`, re-exported by `twitter-image.tsx`) is 1200×630. Keep text large and the layout flex-only (Satori).
 - Icons: `icon.tsx` (256px) and `apple-icon.tsx` render the "TN" badge. Keep them visually consistent with each other.
