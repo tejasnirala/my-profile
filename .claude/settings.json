@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(pnpm lint)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm build)",
+      "Bash(pnpm exec tsc --noEmit)",
+      "Bash(corepack pnpm lint)",
+      "Bash(corepack pnpm build)",
+      "Bash(corepack pnpm exec tsc --noEmit)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)"
+    ],
+    "deny": [
+      "Bash(npm install:*)",
+      "Bash(npm i:*)",
+      "Bash(npm ci:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(yarn:*)",
+      "Edit(package-lock.json)",
+      "Write(package-lock.json)"
+    ]
+  }
+}
