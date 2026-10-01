@@ -36,6 +36,9 @@ export const ProjectsSection = () => {
                   {project.title}
                   <span className="sr-only"> (opens in a new tab)</span>
                 </CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  {project.company} · {project.role}
+                </p>
               </CardHeader>
               <CardContent className="grow">
                 <p className="text-sm text-muted-foreground leading-relaxed">

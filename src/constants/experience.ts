@@ -46,7 +46,7 @@ export const EXPERIENCE: Experience[] = [
         name: "Cablinks: HR and Accounting Management System",
         shortName: "Cablinks HR System",
         feature: {
-          summary: "End-to-end accounting and HR management system handling inventory, billing, and payroll for 500+ users.",
+          summary: "End-to-end accounting and HR management system handling inventory, billing, and payroll.",
           tags: ["NodeJs", "Mongoose", "Payroll Logic", "Team Lead"],
           link: "https://cablinks.org/"
         },
