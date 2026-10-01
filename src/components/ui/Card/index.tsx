@@ -3,10 +3,11 @@ import React from 'react';
 type CardProps = {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-export const Card = ({ children, className = "" }: CardProps) => (
-  <div className={`rounded-xl border bg-card text-card-foreground shadow-sm ${className}`}>
+export const Card = ({ children, className = "", style }: CardProps) => (
+  <div className={`rounded-xl border bg-card text-card-foreground shadow-sm ${className}`} style={style}>
     {children}
   </div>
 );
@@ -26,7 +27,7 @@ type CardTitleProps = {
 };
 
 export const CardTitle = ({ children, className = "" }: CardTitleProps) => (
-  <h3 className={`text-2xl font-semibold leading-none tracking-tight ${className}`}>{children}</h3>
+  <h3 className={`text-2xl font-semibold leading-tight tracking-[-0.015em] ${className}`}>{children}</h3>
 );
 
 type CardDescriptionProps = {

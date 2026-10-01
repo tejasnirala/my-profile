@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { PROFILE } from "../constants/profile";
+import { PROFILE } from "@/constants/profile";
+import { THEME_COLORS } from "@/lib/theme";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -8,8 +9,9 @@ export default function manifest(): MetadataRoute.Manifest {
     description: `Portfolio of ${PROFILE.name}, ${PROFILE.title}.`,
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0a",
-    theme_color: "#0a0a0a",
+    // No `orientation`: the installed app follows the device in portrait and landscape.
+    background_color: THEME_COLORS.dark,
+    theme_color: THEME_COLORS.dark,
     icons: [
       {
         src: "/favicon.ico",

@@ -5,18 +5,21 @@ import { PROFILE } from '@/constants/profile';
 
 export const Header = () => {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="container mx-auto flex flex-col gap-4 md:gap-0 md:flex-row min-h-16 items-center justify-between px-4 md:px-8">
-        <Link href="/" className="mt-1 md:mt-0 flex items-center gap-2 font-bold text-xl tracking-tight">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
+    <header className="sticky top-0 z-50 w-full scroll-edge pt-[env(safe-area-inset-top)] bg-background/95 supports-backdrop-filter:bg-background/70 backdrop-blur-xl backdrop-saturate-150 reduce-transparency:bg-background reduce-transparency:backdrop-blur-none contrast-more:bg-background">
+      <div className="gutter container mx-auto flex flex-col gap-2 py-2 md:flex-row md:gap-0 md:py-0 short:flex-row short:py-1 min-h-16 short:min-h-12 items-center justify-between">
+        <Link
+          href="/"
+          className="flex items-center gap-2 rounded-lg font-bold text-xl tracking-tight select-none transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <span className="size-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
             TN
-          </div>
-          <span className="sm:inline-block">{PROFILE.name}</span>
+          </span>
+          <span>{PROFILE.name}</span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-4">
+        <nav aria-label="Main" className="flex items-center gap-2">
           <NavLinks />
-          <div className="ml-2 pl-2 border-l border-border">
+          <div className="pl-2 border-l border-border">
             <ThemeToggle />
           </div>
         </nav>

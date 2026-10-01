@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { buttonClasses } from '@/components/ui/Button';
@@ -11,24 +12,70 @@ const NAV_ITEMS = [
   { label: 'Contact', href: '/contact' },
 ];
 
+/**
+ * Clips the full-width pill layer down to the active link. Clip-path stays on the
+ * GPU, and a CSS transition retargets from wherever it is, so rapid clicks glide
+ * instead of restarting.
+ */
+const placeIndicator = (nav: HTMLElement, indicator: HTMLElement, animate: boolean) => {
+  const active = nav.querySelector<HTMLElement>('[aria-current="page"]');
+  if (!active) {
+    indicator.style.opacity = '0';
+    return;
+  }
+  const left = active.offsetLeft;
+  const right = nav.clientWidth - left - active.offsetWidth;
+  indicator.style.transition = animate ? '' : 'none';
+  indicator.style.clipPath = `inset(0 ${right}px 0 ${left}px round var(--radius-md))`;
+  indicator.style.opacity = '1';
+  // Hand the active background from the link (server-rendered fallback) to the pill.
+  nav.dataset.ready = '';
+};
+
 export const NavLinks = () => {
   const pathname = usePathname();
+  const navRef = useRef<HTMLDivElement>(null);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
+  const placedRef = useRef(false);
+
+  // Before paint: jump into place on first load, glide on route changes.
+  useLayoutEffect(() => {
+    if (!navRef.current || !indicatorRef.current) return;
+    placeIndicator(navRef.current, indicatorRef.current, placedRef.current);
+    placedRef.current = true;
+  }, [pathname]);
+
+  // Rotation, resizing and font loading move the links; follow them without animating.
+  useEffect(() => {
+    const nav = navRef.current;
+    const indicator = indicatorRef.current;
+    if (!nav || !indicator) return;
+    const observer = new ResizeObserver(() => placeIndicator(nav, indicator, false));
+    observer.observe(nav);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <>
-      {NAV_ITEMS.map((item) => {
-        const isActive = pathname === item.href;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            aria-current={isActive ? 'page' : undefined}
-            className={buttonClasses(isActive ? 'secondary' : 'ghost', 'sm', 'text-xs sm:text-sm')}
-          >
-            {item.label}
-          </Link>
-        );
-      })}
-    </>
+    <div ref={navRef} className="group relative flex items-center gap-1 sm:gap-2">
+      <span
+        ref={indicatorRef}
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-md bg-secondary opacity-0 transition-[clip-path] duration-250 ease-in-out motion-reduce:transition-none"
+      />
+      {NAV_ITEMS.map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          aria-current={pathname === item.href ? 'page' : undefined}
+          className={buttonClasses(
+            'ghost',
+            'sm',
+            'relative px-2.5 text-xs sm:px-3 sm:text-sm aria-[current=page]:bg-secondary aria-[current=page]:text-secondary-foreground group-data-ready:aria-[current=page]:bg-transparent',
+          )}
+        >
+          {item.label}
+        </Link>
+      ))}
+    </div>
   );
 };

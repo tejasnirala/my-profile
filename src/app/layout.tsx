@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { PROFILE, SOCIAL_LINKS } from "@/constants/profile";
@@ -6,7 +6,7 @@ import { EXPERIENCE } from "@/constants/experience";
 import { EDUCATION } from "@/constants/education";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { themeScript } from "@/lib/theme";
+import { THEME_COLORS, themeScript } from "@/lib/theme";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +27,21 @@ const description =
 // Shorter still (~110 chars) for social cards, which often truncate near 125.
 const ogDescription =
   "Software Engineer building scalable SaaS, enterprise & blockchain platforms with Next.js, React, and Node.js.";
+
+// `viewport-fit=cover` lets the page paint under the notch; `gutter` and the
+// safe-area paddings keep content clear of it in landscape. The theme-color tags
+// follow the OS by default; the inline theme script then overrides them with the
+// site's actual theme (dark unless the visitor picked light).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-content",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: THEME_COLORS.light },
+    { media: "(prefers-color-scheme: dark)", color: THEME_COLORS.dark },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(PROFILE.url),
@@ -85,6 +100,11 @@ export const metadata: Metadata = {
     description: ogDescription,
   },
   category: "technology",
+  appleWebApp: {
+    capable: true,
+    title: PROFILE.name,
+    statusBarStyle: "default",
+  },
 };
 
 const jsonLd = {
@@ -131,9 +151,15 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <div className="min-h-screen w-full bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground transition-colors duration-300 flex flex-col">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+        >
+          Skip to content
+        </a>
+        <div className="min-h-svh w-full bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground flex flex-col">
           <Header />
-          <main className="flex-1 container mx-auto px-4 py-8 md:px-8 md:py-12 max-w-5xl animate-in fade-in duration-500">
+          <main id="main" className="flex-1 container mx-auto gutter py-8 md:py-12 short:py-6 max-w-5xl">
             {children}
           </main>
           <Footer />

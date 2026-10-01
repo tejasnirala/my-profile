@@ -8,24 +8,26 @@ import { EXPERIENCE } from '@/constants/experience';
 import { EDUCATION } from '@/constants/education';
 import { CERTIFICATIONS } from '@/constants/certification';
 import { HOBBIES } from '@/constants/hobbies';
+import { stagger } from '@/lib/motion';
 
-const sectionHeading = 'text-3xl font-bold tracking-tight mb-6';
+const sectionHeading = 'reveal text-3xl font-bold tracking-tight mb-6';
 
 export const ResumeSection = () => {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between">
+      <div className="enter flex flex-wrap items-center justify-between gap-4" style={stagger(0)}>
         <h2 className="text-3xl font-bold tracking-tight">Experience</h2>
         <a
           href="/Tejas_Nirala_Resume.pdf"
           download
-          className={buttonClasses("outline", "sm", "gap-2")}
+          className={buttonClasses("outline", "sm", "group")}
         >
-          <Download className="h-4 w-4" /> Download Resume
+          <Download className="h-4 w-4 transition-[translate] duration-200 ease-out motion-safe:group-hover:translate-y-0.5" />
+          Download Resume
         </a>
       </div>
 
-      <div className="space-y-10">
+      <div className="enter space-y-10" style={stagger(1)}>
         {EXPERIENCE.map((exp) => (
           <TimelineItem key={`${exp.company}-${exp.role}`} title={exp.role} period={exp.period} subtitle={exp.company}>
             <div className="space-y-6">
@@ -72,7 +74,7 @@ export const ResumeSection = () => {
                 href={cert.file}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                className="mt-2 -mx-1 inline-flex items-center gap-1.5 rounded-md px-1 py-1 pointer-coarse:py-2.5 text-sm font-medium text-primary select-none hover:underline transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <ExternalLink className="h-4 w-4" /> View Certificate
               </a>
@@ -84,7 +86,7 @@ export const ResumeSection = () => {
       <Separator className="my-8" />
 
       <h2 className={sectionHeading}>Hobbies & Interests</h2>
-      <div className="flex flex-wrap gap-3">
+      <div className="reveal flex flex-wrap gap-3">
         {HOBBIES.map((hobby) => (
           <Badge key={hobby} variant="secondary" className="text-base px-4 py-2 bg-secondary/80">
             {hobby}
