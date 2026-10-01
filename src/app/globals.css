@@ -7,6 +7,15 @@
 @custom-variant reduce-transparency (@media (prefers-reduced-transparency: reduce));
 /* Phones in landscape: wide enough for desktop breakpoints, but very short */
 @custom-variant short (@media (orientation: landscape) and (max-height: 32rem));
+/* Hover only for precise pointers. Tailwind's default checks `(hover: hover)`
+   alone, which some touch devices report; this also covers `group-hover:`. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
 
 /* 2. Map Tailwind utilities to our CSS variables */
 @theme {
@@ -138,6 +147,11 @@
   [role="button"] {
     touch-action: manipulation;
   }
+  /* Controls don't show the iOS long-press callout (links that are content do) */
+  button,
+  [role="button"] {
+    -webkit-touch-callout: none;
+  }
   h1,
   h2,
   h3 {
@@ -164,7 +178,10 @@
 /* 6. Motion */
 
 /* Staggered entrance when a page mounts. Set `--i` with `stagger(n)` from
-   lib/motion. Reduced motion keeps a short fade but drops the movement. */
+   lib/motion. Reduced motion keeps a short fade but drops the movement.
+   450ms is deliberately above the 300ms UI budget: this is a page-level
+   entrance seen once per visit to a page, not a control the visitor waits on,
+   and it never blocks interaction. */
 @keyframes enter {
   from {
     opacity: 0;

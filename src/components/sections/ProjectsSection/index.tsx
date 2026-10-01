@@ -49,7 +49,7 @@ export const ProjectsSection = () => {
               <CardFooter className="pt-4 mt-auto border-t bg-secondary/10">
                 <ul role="list" aria-label="Technologies" className="flex flex-wrap gap-2">
                   {project.tags.map(tag => (
-                    <li key={tag} className="text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded-md">
+                    <li key={tag} className="text-xs font-medium tracking-[0.01em] text-muted-foreground bg-secondary px-2 py-1 rounded-md">
                       {tag}
                     </li>
                   ))}

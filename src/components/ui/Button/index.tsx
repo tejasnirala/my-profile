@@ -22,13 +22,14 @@ const sizes: Record<Size, string> = {
  * Shared button styling. Exported so links (`<a>`) can look like buttons
  * without needing an onClick handler — keeping those components server-rendered.
  * Press feedback (scale on `:active`) responds on pointer-down, not on release.
+ * Controls don't show the iOS long-press link callout.
  */
 export const buttonClasses = (
   variant: Variant = "default",
   size: Size = "default",
   className = "",
 ) =>
-  `inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium select-none ring-offset-background transition-[color,background-color,border-color,scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`;
+  `inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium select-none [-webkit-touch-callout:none] ring-offset-background transition-[color,background-color,border-color,scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`;
 
 type ButtonProps = React.ComponentProps<"button"> & {
   variant?: Variant;
