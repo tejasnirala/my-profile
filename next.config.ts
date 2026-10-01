@@ -3,6 +3,11 @@ import withSerwistInit from "@serwist/next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  experimental: {
+    // The whole stylesheet is ~8 KB gzipped, so ship it inside the HTML instead of
+    // as a render-blocking request: one fewer round trip before first paint.
+    inlineCss: true,
+  },
 };
 
 const isDev = process.env.NODE_ENV === "development";
