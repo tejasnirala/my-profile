@@ -1,11 +1,9 @@
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { PROFILE, SOCIAL_LINKS } from "@/constants/profile";
-import { EXPERIENCE } from "@/constants/experience";
-import { EDUCATION } from "@/constants/education";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { personJsonLd, siteMetadata } from "@/lib/seo";
 import { THEME_COLORS, themeScript } from "@/lib/theme";
 
 const geistSans = Geist({
@@ -17,16 +15,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-const allSkills = PROFILE.skills.flatMap((group) => group.items);
-
-// Kept under ~155 chars so Google doesn't truncate it in search results.
-const description =
-  `Software Engineer with ~${Math.round(PROFILE.yearsOfExperience)} years building scalable SaaS, enterprise, and blockchain platforms using Next.js, React, TypeScript, and Node.js.`;
-
-// Shorter still (~110 chars) for social cards, which often truncate near 125.
-const ogDescription =
-  "Software Engineer building scalable SaaS, enterprise & blockchain platforms with Next.js, React, and Node.js.";
 
 // `viewport-fit=cover` lets the page paint under the notch; `gutter` and the
 // safe-area paddings keep content clear of it in landscape. The theme-color tags
@@ -43,96 +31,7 @@ export const viewport: Viewport = {
   ],
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(PROFILE.url),
-  title: {
-    default: `${PROFILE.name} — ${PROFILE.title}`,
-    template: `%s | ${PROFILE.name}`,
-  },
-  description,
-  keywords: [
-    PROFILE.name,
-    "Full Stack Developer",
-    "Software Engineer",
-    "Frontend Developer",
-    "React Developer",
-    "Next.js Developer",
-    "Portfolio",
-    PROFILE.address.city,
-    ...allSkills,
-  ],
-  authors: [{ name: PROFILE.name, url: PROFILE.url }],
-  creator: PROFILE.name,
-  applicationName: `${PROFILE.name} Portfolio`,
-  alternates: {
-    canonical: "/",
-  },
-  verification: {
-    // Get this from Google Search Console → Settings → Ownership verification →
-    // HTML tag, then set GOOGLE_SITE_VERIFICATION in your env (e.g. Vercel project
-    // env vars). Until set, no verification tag is emitted.
-    google: process.env.GOOGLE_SITE_VERIFICATION,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
-  openGraph: {
-    type: "profile",
-    title: `${PROFILE.name} — ${PROFILE.title}`,
-    description: ogDescription,
-    url: PROFILE.url,
-    siteName: PROFILE.name,
-    locale: "en_US",
-    firstName: "Tejas",
-    lastName: "Nirala",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${PROFILE.name} — ${PROFILE.title}`,
-    description: ogDescription,
-  },
-  category: "technology",
-  appleWebApp: {
-    capable: true,
-    title: PROFILE.name,
-    statusBarStyle: "default",
-  },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: PROFILE.name,
-  url: PROFILE.url,
-  jobTitle: PROFILE.title,
-  email: `mailto:${PROFILE.email}`,
-  telephone: PROFILE.phone,
-  description: PROFILE.about,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: PROFILE.address.city,
-    addressRegion: PROFILE.address.region,
-    addressCountry: PROFILE.address.countryCode,
-  },
-  worksFor: {
-    "@type": "Organization",
-    name: EXPERIENCE[0]?.company,
-  },
-  alumniOf: EDUCATION.filter((e) => e.school.includes("University")).map((e) => ({
-    "@type": "CollegeOrUniversity",
-    name: e.school,
-  })),
-  knowsAbout: allSkills,
-  sameAs: SOCIAL_LINKS.map((link) => link.href),
-};
+export const metadata = siteMetadata;
 
 export default function RootLayout({
   children,
@@ -149,7 +48,7 @@ export default function RootLayout({
       >
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <a
           href="#main"

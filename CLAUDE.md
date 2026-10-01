@@ -27,7 +27,7 @@ Use the `/verify` skill to run the full check sequence.
 ```
 src/
 ├── app/                  Routes + metadata (server components)
-│   ├── layout.tsx        Global <head>: site metadata, JSON-LD Person schema, no-flash theme script, Header/Footer
+│   ├── layout.tsx        Root shell: viewport, no-flash theme script, JSON-LD tag, skip link, Header/Footer
 │   ├── page.tsx          /          → AboutSection
 │   ├── resume/page.tsx   /resume    → ResumeSection
 │   ├── projects/page.tsx /projects  → ProjectsSection
@@ -42,7 +42,7 @@ src/
 │   └── ui/               Tiny local primitives: Button (+ buttonClasses), Card, Badge, Separator, TimelineItem
 ├── constants/            ALL site content: profile (+ SOCIAL_LINKS, HIGHLIGHTS), experience (+ FEATURED_PROJECTS), education, certification, hobbies, contact, pages (the page registry)
 └── lib/
-    ├── pages.ts          `pageMetadata(id)` for each page.tsx, from the page registry
+    ├── seo.ts            Search + social: siteMetadata, pageMetadata(id), personJsonLd, and build-time SEO checks
     ├── theme.ts          The whole theme: inline no-flash script, toggle, theme-color (localStorage key `theme`)
     └── motion.ts         `stagger(n)` for the `enter` entrance utility
 public/                   Resume PDF, certificate images/PDFs
@@ -66,7 +66,7 @@ public/                   Resume PDF, certificate images/PDFs
 - **Use pnpm only for installs.** Never run `npm install`/`npm i`, which updates only the stale `package-lock.json` and breaks the Vercel deploy (`ERR_PNPM_OUTDATED_LOCKFILE`). `pnpm-workspace.yaml` is git-ignored on purpose.
 - **Serwist is production-only.** `next.config.ts` skips the Serwist wrapper in dev, and `build` must keep `--webpack` (Serwist conflicts with Turbopack). To test offline/PWA behavior, run `pnpm build && pnpm start`, not `pnpm dev`. `public/sw.js` is generated and git-ignored.
 - **Theme logic lives only in `lib/theme.ts`.** It builds the inline `<head>` script (no flash of the wrong theme, keeps `<meta name="theme-color">` in sync, and enables `:active` on iOS) and the toggle. Dark is the default. The toggle icon is picked by CSS (`dark:`), not React state.
-- **JSON-LD depends on data order:** `worksFor` uses `EXPERIENCE[0]`, so the current job must stay first, and `alumniOf` only includes schools whose name contains "University".
+- **SEO rules fail the build.** `lib/seo.ts` checks on load that descriptions fit (155 site/page, 110 social), at most one experience runs to "Present" (that one is JSON-LD `worksFor`), and every `featuredSkills` entry is a listed skill. A `SEO check failed:` error in `pnpm build` means fix the data, not the check. `alumniOf` lists education with `level: "university"`.
 - **The share image shows `PROFILE.featuredSkills`**, filtered against `PROFILE.skills`. If a skill is renamed, update `featuredSkills` too.
 - **`next/og` (Satori) layout:** any `<div>` with more than one child needs `display: "flex"` or the build fails.
 - **Ignore the `baseline-browser-mapping` "data is over two months old" build warning.** It's harmless, and that package was removed on purpose (commit 96a9789).

@@ -1,5 +1,5 @@
 import { ResumeSection } from '@/components/sections/ResumeSection';
-import { pageMetadata } from '@/lib/pages';
+import { pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata('resume');
 

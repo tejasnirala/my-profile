@@ -1,5 +1,5 @@
 import { ContactSection } from '@/components/sections/ContactSection';
-import { pageMetadata } from '@/lib/pages';
+import { pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata('contact');
 

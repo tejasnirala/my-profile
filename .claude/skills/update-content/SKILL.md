@@ -17,13 +17,13 @@ The site mirrors the resume. Most changes are data-only, in `src/constants/`. Th
 | Skills | `constants/profile.ts` `skills`. If a skill in `featuredSkills` (shown on the share image) is renamed or removed, update that list too. |
 | Hero headline, About highlight cards | `constants/profile.ts` `headline` and `HIGHLIGHTS` |
 | Contact page copy | `constants/contact.ts` |
-| Jobs, engagements and achievements | `constants/experience.ts`, newest first (`[0]` = current employer, used by JSON-LD `worksFor`) |
+| Jobs, engagements and achievements | `constants/experience.ts`, newest first. The current job's period ends in "Present"; when leaving a job, change its end date so at most one does (the build checks). |
 | Featured projects | `constants/experience.ts`: give the engagement a `feature` (`summary`, `tags`, `link`) and, if its name is long, a `shortName`. The Projects page lists featured engagements in resume order. Summaries never contain metrics; those live in achievements. |
-| Education | `constants/education.ts` (schools containing "University" go into JSON-LD `alumniOf`) |
+| Education | `constants/education.ts`. Set `level: "university"` for universities (they go into JSON-LD `alumniOf`), otherwise `"school"`. |
 | Certifications | `CERTIFICATIONS` in `constants/certification.ts` + file in `public/` (`file: "/Name.jpg"`) |
 | Hobbies | `constants/hobbies.ts` |
 | Resume PDF | Replace `public/Tejas_Nirala_Resume.pdf` in place and keep the filename |
-| Site/OG descriptions that mention the stack or domains | `app/layout.tsx` (`description` ≤ 155 chars, `ogDescription` ≤ 110 chars) and the description in each `app/*/page.tsx` |
+| Site/OG descriptions that mention the stack or domains | `lib/seo.ts` (`description` ≤ 155 chars, `ogDescription` ≤ 110 chars) and each page's `description` in `constants/pages.ts`. The build fails if any is too long. |
 
 ## Process
 1. Get the new facts from the user, or from the resume PDF if they provide one. Don't invent metrics, dates or wording beyond what they give.

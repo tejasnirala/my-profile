@@ -15,7 +15,7 @@ Review only what changed: `git diff` and `git diff --staged` (or the files/commi
 2. **Server/client boundary:** unnecessary `"use client"`; hooks or event handlers in server components; `<Button>` used where `buttonClasses()` on a link would keep it server-rendered.
 3. **Hydration and theme:** server/client markup mismatch; theme logic added outside `lib/theme.ts` (the inline script and the toggle are both built there); colors that break in dark or light mode.
 4. **Correctness:** wrong links/hrefs, missing `rel="noopener noreferrer"` on `target="_blank"`, routes missing from `sitemap.ts` or `NAV_ITEMS`, metadata without a `canonical`.
-5. **Content consistency:** facts changed in one place but not the others (see `.claude/rules/content.md`), and `EXPERIENCE[0]` no longer the current job.
+5. **Content consistency:** facts changed in one place but not the others (see `.claude/rules/content.md`), and an `SEO check failed:` error being "fixed" by loosening the check in `lib/seo.ts` instead of fixing the data.
 6. **Conventions:** hardcoded colors or domains, manual `useMemo`/`useCallback` (the React Compiler is on), new deps that duplicate existing ones, content strings inlined in JSX.
 
 Run `pnpm exec tsc --noEmit` and `pnpm lint`. Report only **new** lint errors; the 4 known errors listed in CLAUDE.md predate this setup.

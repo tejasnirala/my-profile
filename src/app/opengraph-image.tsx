@@ -6,9 +6,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpengraphImage() {
-  // Curated set for the share card, filtered to skills actually listed.
-  const allSkills = PROFILE.skills.flatMap((group) => group.items);
-  const topSkills = PROFILE.featuredSkills.filter((s) => allSkills.includes(s));
+  // Curated set for the share card. lib/seo checks each one is a listed skill.
+  const topSkills = PROFILE.featuredSkills;
 
   return new ImageResponse(
     (

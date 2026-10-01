@@ -1,5 +1,5 @@
 import { AboutSection } from '@/components/sections/AboutSection';
-import { pageMetadata } from '@/lib/pages';
+import { pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata('about');
 

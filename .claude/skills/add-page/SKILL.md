@@ -42,7 +42,7 @@ Add `'uses'` to `PageId`, then add an entry to `PAGES` (array order is nav order
   path: '/uses',
   navLabel: 'Uses',
   title: 'Uses',
-  description: `Tools and setup ${PROFILE.name} uses as a ${PROFILE.title}.`, // ≤155 chars, unique
+  description: `Tools and setup ${PROFILE.name} uses as a ${PROFILE.title}.`, // ≤155 chars (build-checked), unique
 },
 ```
 Build names, titles and places from `PROFILE`; never hardcode them. This one entry puts the page in the nav (with the active pill), the sitemap and its own metadata. The header must still fit on a 375px phone in portrait (4 items plus the theme toggle today); if it doesn't, ask before redesigning the nav.
@@ -50,7 +50,7 @@ Build names, titles and places from `PROFILE`; never hardcode them. This one ent
 ## 4. Route: `src/app/uses/page.tsx`
 ```tsx
 import { UsesSection } from '@/components/sections/UsesSection';
-import { pageMetadata } from '@/lib/pages';
+import { pageMetadata } from '@/lib/seo';
 
 export const metadata = pageMetadata('uses');
 
