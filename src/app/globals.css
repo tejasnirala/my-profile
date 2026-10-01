@@ -222,20 +222,32 @@
   }
 }
 
-/* Header edge: no divider at the top of the page, then the border fades in once
-   content starts scrolling underneath the translucent header. */
+/* Header edge: no divider at the top of the page, then the divider fades in once
+   content starts scrolling underneath the translucent header. The line is a
+   pseudo-element whose opacity is animated, so it runs on the compositor
+   (animating border-color would repaint on every scroll frame). */
 @keyframes scroll-edge {
   to {
-    border-bottom-color: var(--color-border);
+    opacity: 1;
   }
 }
 @utility scroll-edge {
   border-bottom: 1px solid var(--color-border);
   @supports (animation-timeline: scroll()) {
     border-bottom-color: transparent;
-    animation: scroll-edge linear both;
-    animation-timeline: scroll(root);
-    animation-range: 0 4rem;
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      bottom: -1px;
+      height: 1px;
+      background: var(--color-border);
+      opacity: 0;
+      pointer-events: none;
+      animation: scroll-edge linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 4rem;
+    }
   }
 }
 
@@ -250,7 +262,7 @@
 @media print {
   .enter,
   .reveal,
-  .scroll-edge {
+  .scroll-edge::after {
     animation: none !important;
   }
   header {
