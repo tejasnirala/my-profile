@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, FolderGit2 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/Card';
-import { PROJECTS, PROJECTS_INTRO } from '@/constants/projects';
+import { FEATURED_PROJECTS, FEATURED_PROJECTS_INTRO } from '@/constants/experience';
 import { stagger } from '@/lib/motion';
 
 export const ProjectsSection = () => {
@@ -9,11 +9,11 @@ export const ProjectsSection = () => {
     <div className="space-y-8">
       <div className="enter flex flex-col space-y-2" style={stagger(0)}>
         <h2 className="text-3xl font-bold tracking-tight">Featured Projects</h2>
-        <p className="text-muted-foreground">{PROJECTS_INTRO}</p>
+        <p className="text-muted-foreground">{FEATURED_PROJECTS_INTRO}</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {PROJECTS.map((project, index) => (
+        {FEATURED_PROJECTS.map((project, index) => (
           // The whole card is the link, so it's a big, honest target on touch screens.
           <a
             key={project.title}
@@ -39,7 +39,7 @@ export const ProjectsSection = () => {
               </CardHeader>
               <CardContent className="grow">
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  {project.description}
+                  {project.summary}
                 </p>
               </CardContent>
               <CardFooter className="flex flex-wrap gap-2 pt-4 mt-auto border-t bg-secondary/10">

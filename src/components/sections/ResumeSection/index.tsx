@@ -31,14 +31,14 @@ export const ResumeSection = () => {
         {EXPERIENCE.map((exp) => (
           <TimelineItem key={`${exp.company}-${exp.role}`} title={exp.role} period={exp.period} subtitle={exp.company}>
             <div className="space-y-6">
-              {exp.projects.map((project) => (
-                <div key={project.name}>
+              {exp.engagements.map((engagement) => (
+                <div key={engagement.name}>
                   <h4 className="text-base font-semibold text-foreground mb-2 flex items-center gap-2">
                     <Briefcase className="h-4 w-4 shrink-0 text-muted-foreground" />
-                    {project.name}
+                    {engagement.name}
                   </h4>
                   <ul className="list-disc list-outside ml-4 space-y-1 text-sm text-muted-foreground">
-                    {project.achievements.map((ach) => (
+                    {engagement.achievements.map((ach) => (
                       <li key={ach} className="leading-relaxed">{ach}</li>
                     ))}
                   </ul>

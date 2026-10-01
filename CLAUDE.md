@@ -40,7 +40,7 @@ src/
 │   ├── layout/           Header, Footer, NavLinks (client), ThemeToggle (client)
 │   ├── sections/         One section per page: About, Resume, Projects, Contact
 │   └── ui/               Tiny local primitives: Button (+ buttonClasses), Card, Badge, Separator, TimelineItem
-├── constants/            ALL site content: profile (+ SOCIAL_LINKS, HIGHLIGHTS), experience, projects, education, certification, hobbies, contact
+├── constants/            ALL site content: profile (+ SOCIAL_LINKS, HIGHLIGHTS), experience (+ FEATURED_PROJECTS), education, certification, hobbies, contact
 └── lib/
     ├── theme.ts          The whole theme: inline no-flash script, toggle, theme-color (localStorage key `theme`)
     └── motion.ts         `stagger(n)` for the `enter` entrance utility

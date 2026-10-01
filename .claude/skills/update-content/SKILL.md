@@ -17,8 +17,8 @@ The site mirrors the resume. Most changes are data-only, in `src/constants/`. Th
 | Skills | `constants/profile.ts` `skills`. If a skill in `featuredSkills` (shown on the share image) is renamed or removed, update that list too. |
 | Hero headline, About highlight cards | `constants/profile.ts` `headline` and `HIGHLIGHTS` |
 | Contact page copy | `constants/contact.ts` |
-| Jobs and achievements | `constants/experience.ts`, newest first (`[0]` = current employer, used by JSON-LD `worksFor`) |
-| Featured projects | `constants/projects.ts`. Keep metrics consistent with the matching achievement in `experience.ts` (e.g. "500+ users"). |
+| Jobs, engagements and achievements | `constants/experience.ts`, newest first (`[0]` = current employer, used by JSON-LD `worksFor`) |
+| Featured projects | `constants/experience.ts`: give the engagement a `feature` (`summary`, `tags`, `link`) and, if its name is long, a `shortName`. The Projects page lists featured engagements in resume order. Summaries never contain metrics; those live in achievements. |
 | Education | `constants/education.ts` (schools containing "University" go into JSON-LD `alumniOf`) |
 | Certifications | `CERTIFICATIONS` in `constants/certification.ts` + file in `public/` (`file: "/Name.jpg"`) |
 | Hobbies | `constants/hobbies.ts` |
