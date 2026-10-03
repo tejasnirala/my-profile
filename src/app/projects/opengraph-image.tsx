@@ -1,3 +1,10 @@
-// Same share card as the home page; a page that sets its own `openGraph` drops the
-// root one, so each route re-exports it.
-export { default, alt, size, contentType } from "../opengraph-image";
+import { SHARE_CARD_SIZE, shareCard, shareCardAlt } from "@/lib/share-card";
+
+// This page's link-preview card (see lib/share-card.tsx).
+export const alt = shareCardAlt("projects");
+export const size = SHARE_CARD_SIZE;
+export const contentType = "image/png";
+
+export default function OpengraphImage() {
+  return shareCard("projects");
+}
