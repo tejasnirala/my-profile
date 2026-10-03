@@ -24,7 +24,7 @@ export const EXPERIENCE: Experience[] = [
   {
     company: "Briskcovey Technologies",
     role: "Full Stack Engineer",
-    period: "Jun 2025 - Present",
+    period: "Jun 2025 - Aug 2026",
     location: "Jaipur, Rajasthan",
     engagements: [
       {
