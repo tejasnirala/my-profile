@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Variant = "default" | "outline" | "ghost" | "secondary";
+type Variant = "default" | "outline" | "ghost";
 type Size = "default" | "sm" | "lg" | "icon";
 
 // `default` is the amber call to action; everything else stays quiet and hairline.
@@ -8,7 +8,6 @@ const variants: Record<Variant, string> = {
   default: "bg-highlight text-highlight-foreground font-semibold hover:brightness-95",
   outline: "border border-input bg-background/60 hover:bg-secondary hover:border-foreground/40",
   ghost: "hover:bg-accent hover:text-accent-foreground",
-  secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
 };
 
 // Touch screens get 44px targets (Apple's minimum); mice keep the denser sizes.

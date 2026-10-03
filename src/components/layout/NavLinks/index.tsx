@@ -53,7 +53,7 @@ export const NavLinks = ({ items }: NavLinksProps) => {
   }, []);
 
   return (
-    <div ref={navRef} className="group relative flex items-center gap-0.5 sm:gap-1">
+    <div ref={navRef} className="group relative flex items-center gap-0.5 sm:gap-1 max-md:justify-center">
       <span
         ref={indicatorRef}
         aria-hidden

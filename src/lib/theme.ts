@@ -1,3 +1,5 @@
+import { PALETTE } from './palette';
+
 /**
  * Single source of truth for the dark/light theme.
  *
@@ -7,10 +9,10 @@
  */
 export const THEME_STORAGE_KEY = 'theme';
 
-/** Page background per theme (matches `--background` in globals.css). */
+/** Page background per theme (`--background` in globals.css). */
 export const THEME_COLORS = {
-  light: '#fafafa',
-  dark: '#0a0a0a',
+  light: PALETTE.light.background,
+  dark: PALETTE.dark.background,
 } as const;
 
 export type Theme = keyof typeof THEME_COLORS;
@@ -28,13 +30,20 @@ export const themeScript = `(function () {
     if (t) d = t === 'dark';
   } catch (e) {}
   document.documentElement.classList.toggle('dark', d);
+  // Reads the class each time, so it stays right after the toggle flips it.
   var sync = function () {
+    var color = document.documentElement.classList.contains('dark') ? '${THEME_COLORS.dark}' : '${THEME_COLORS.light}';
     document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
-      m.setAttribute('content', d ? '${THEME_COLORS.dark}' : '${THEME_COLORS.light}');
+      if (m.getAttribute('content') !== color) m.setAttribute('content', color);
     });
   };
   sync();
-  document.addEventListener('DOMContentLoaded', sync);
+  document.addEventListener('DOMContentLoaded', function () {
+    sync();
+    // Client-side navigation can re-insert the per-scheme theme-color tags from
+    // the metadata; keep them on the site's theme rather than the OS scheme.
+    new MutationObserver(sync).observe(document.head, { childList: true });
+  });
   document.addEventListener('touchstart', function () {}, { passive: true });
 })();`;
 

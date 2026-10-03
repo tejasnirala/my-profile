@@ -19,7 +19,7 @@ export type Experience = {
   engagements: Engagement[];
 };
 
-/** Newest first: `EXPERIENCE[0]` is the current employer. */
+/** Newest first. An entry whose period ends in "Present" is the current employer (`isCurrent`). */
 export const EXPERIENCE: Experience[] = [
   {
     company: "Briskcovey Technologies",
@@ -82,6 +82,46 @@ export const EXPERIENCE: Experience[] = [
     ]
   }
 ];
+
+const MONTH_NAMES = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+const PRESENT = /^present$/i;
+
+/** Splits "Mon YYYY - Mon YYYY" (hyphen, en or em dash) into its two ends. */
+const periodEnds = (period: string) => {
+  const ends = period.split(/\s*[-–—]\s*/);
+  if (ends.length !== 2) throw new Error(`Experience period must be "Mon YYYY - Mon YYYY" or "Mon YYYY - Present": "${period}"`);
+  return ends as [string, string];
+};
+
+/** Whether an experience runs to "Present", i.e. is the current employer. */
+export const isCurrent = ({ period }: Experience) => PRESENT.test(periodEnds(period)[1].trim());
+
+/** A "Mon YYYY" date (or "Present", meaning the current month) as a month count. */
+const toMonth = (label: string, now: Date) => {
+  if (PRESENT.test(label.trim())) return now.getFullYear() * 12 + now.getMonth();
+  const [month = "", year = ""] = label.trim().split(/\s+/);
+  const index = MONTH_NAMES.indexOf(month.slice(0, 3).toLowerCase());
+  if (index < 0 || !/^\d{4}$/.test(year)) throw new Error(`Unrecognised experience date: "${label}" (expected "Mon YYYY")`);
+  return Number(year) * 12 + index;
+};
+
+/**
+ * Total months worked, from the `period` of every experience. Both ends count
+ * (Jul 2023 - Feb 2025 is 20 months), each calendar month is counted once so
+ * overlapping roles aren't double-counted, and "Present" runs to the current
+ * month. Evaluated at build time, so the figure moves forward with each deploy.
+ */
+export const workedMonths = (experience: Experience[], now = new Date()) => {
+  const months = new Set<number>();
+  for (const { period } of experience) {
+    const [start, end] = periodEnds(period);
+    const from = toMonth(start, now);
+    const to = toMonth(end, now);
+    if (from > to) throw new Error(`Experience period ends before it starts: "${period}"`);
+    for (let month = from; month <= to; month++) months.add(month);
+  }
+  return months.size;
+};
 
 export const FEATURED_PROJECTS_INTRO = "A selection of projects I've engineered and led.";
 

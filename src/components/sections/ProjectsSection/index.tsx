@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { Card, CardDescription, CardKicker } from '@/components/ui/Card';
+import { Card, CardDescription, CardKicker, CardTitle } from '@/components/ui/Card';
 import { NewTabHint } from '@/components/ui/NewTabHint';
 import { Section } from '@/components/ui/Section';
 import { SectionHeader } from '@/components/ui/SectionHeader';
@@ -9,7 +9,7 @@ import { stagger } from '@/lib/motion';
 
 export const ProjectsSection = () => {
   return (
-    <Section innerClassName="space-y-10 pt-10 md:pt-16">
+    <Section innerClassName="space-y-10 pt-6 md:pt-10">
       <SectionHeader
         as="h1"
         eyebrow="projects"
@@ -32,20 +32,20 @@ export const ProjectsSection = () => {
             >
               <Card
                 variant={index === 0 ? 'featured' : 'default'}
-                className="reveal flex h-full flex-col gap-4 p-6 transition-[border-color,scale] duration-200 ease-out group-hover:border-brand/60 motion-safe:group-active:scale-[0.99]"
+                className="flex h-full flex-col gap-4 p-6 transition-[border-color,scale] duration-150 ease-out group-hover:border-brand/60 motion-safe:group-active:scale-[0.99]"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <CardKicker index={String(index + 1).padStart(2, '0')} label={project.company} />
+                  <CardKicker index={index} label={project.company} />
                   <ArrowUpRight
                     aria-hidden
                     className="size-5 shrink-0 text-muted-foreground transition-[color,translate] duration-200 ease-out group-hover:text-brand motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
                   />
                 </div>
                 <div className="space-y-1">
-                  <h2 className="text-lg font-bold leading-snug tracking-[-0.01em]">
+                  <CardTitle as="h2">
                     {project.title}
                     <NewTabHint />
-                  </h2>
+                  </CardTitle>
                   <p className="text-xs text-muted-foreground">{project.role}</p>
                 </div>
                 <CardDescription className="grow">{project.summary}</CardDescription>

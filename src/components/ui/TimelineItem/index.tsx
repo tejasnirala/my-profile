@@ -1,4 +1,5 @@
 import React from 'react';
+import { CardTitle } from '@/components/ui/Card';
 
 type TimelineItemProps = {
   title: string;
@@ -21,7 +22,7 @@ export const TimelineItem = ({ title, period, subtitle, meta, children }: Timeli
     </div>
 
     <div>
-      <h3 className="text-lg font-bold leading-snug tracking-[-0.01em]">{title}</h3>
+      <CardTitle>{title}</CardTitle>
       <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
       {children && <div className="mt-5">{children}</div>}
     </div>

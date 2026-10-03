@@ -29,8 +29,8 @@ export const CardHeader = ({ children, className = "" }: CardHeaderProps) => (
 );
 
 type CardKickerProps = {
-  /** Shown in orange before the label, e.g. "01". */
-  index?: string;
+  /** Zero-based position in the list; shown one-based and padded in orange ("01"). */
+  index?: number;
   label: string;
   className?: string;
 };
@@ -38,7 +38,9 @@ type CardKickerProps = {
 /** The small numbered caps line above a card title: "01  PR REVIEWS". */
 export const CardKicker = ({ index, label, className = "" }: CardKickerProps) => (
   <p className={`label-caps flex items-center gap-3 text-muted-foreground ${className}`}>
-    {index && <span className="font-bold tracking-normal text-brand">{index}</span>}
+    {index !== undefined && (
+      <span className="font-bold tracking-normal text-brand">{String(index + 1).padStart(2, "0")}</span>
+    )}
     {label}
   </p>
 );
@@ -61,22 +63,4 @@ type CardDescriptionProps = {
 
 export const CardDescription = ({ children, className = "" }: CardDescriptionProps) => (
   <p className={`text-sm leading-relaxed text-muted-foreground ${className}`}>{children}</p>
-);
-
-type CardContentProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-export const CardContent = ({ children, className = "" }: CardContentProps) => (
-  <div className={`p-6 pt-0 ${className}`}>{children}</div>
-);
-
-type CardFooterProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-export const CardFooter = ({ children, className = "" }: CardFooterProps) => (
-  <div className={`flex items-center p-6 pt-0 ${className}`}>{children}</div>
 );

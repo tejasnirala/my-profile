@@ -1,12 +1,16 @@
 @import "tailwindcss";
+/* Tailwind scans the whole repo for class names; the skill docs in .claude/ are
+   full of example classes that would otherwise ship in every page's inlined CSS. */
+@source not "../../.claude";
 
 /* 1. Tell Tailwind v4 to look for the .dark class for dark mode variants */
 @variant dark (&:where(.dark, .dark *));
 
 /* Accessibility and orientation variants Tailwind doesn't ship */
 @custom-variant reduce-transparency (@media (prefers-reduced-transparency: reduce));
-/* Phones in landscape: wide enough for desktop breakpoints, but very short */
-@custom-variant short (@media (orientation: landscape) and (max-height: 32rem));
+/* Phones in landscape: wide enough for desktop breakpoints, but very short. Touch
+   only, so a short desktop window (e.g. devtools docked) keeps the desktop layout. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 32rem) and (pointer: coarse));
 /* Hover only for precise pointers. Tailwind's default checks `(hover: hover)`
    alone, which some touch devices report; this also covers `group-hover:`. */
 @custom-variant hover {
@@ -31,17 +35,11 @@
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
 
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
 
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
-
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
 
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
@@ -64,7 +62,6 @@
      which are too weak to feel intentional. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* entering, exiting, press feedback */
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* moving on screen */
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* sheets and drawers */
   --default-transition-timing-function: ease; /* hover and color changes */
   --default-transition-duration: 150ms;
 }
@@ -83,8 +80,6 @@
   --foreground: 225 20% 8%;
   --card: 228 25% 98%;
   --card-foreground: 225 20% 8%;
-  --popover: 228 25% 98%;
-  --popover-foreground: 225 20% 8%;
   --primary: 225 20% 8%;
   --primary-foreground: 228 20% 96%;
   --secondary: 228 14% 91%;
@@ -93,8 +88,6 @@
   --muted-foreground: 225 9% 37%; /* ≥4.5:1 on --background and --secondary (WCAG 1.4.3) */
   --accent: 228 14% 91%;
   --accent-foreground: 225 20% 8%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
   --border: 228 10% 84%;
   --input: 228 9% 74%;
   --ring: 22 75% 38%;
@@ -113,8 +106,6 @@
   --foreground: 220 15% 92%;
   --card: 225 12% 7%;
   --card-foreground: 220 15% 92%;
-  --popover: 225 12% 7%;
-  --popover-foreground: 220 15% 92%;
   --primary: 220 15% 92%;
   --primary-foreground: 225 14% 5%;
   --secondary: 225 9% 12%;
@@ -123,8 +114,6 @@
   --muted-foreground: 222 8% 63%;
   --accent: 225 9% 12%;
   --accent-foreground: 220 15% 92%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
   --border: 225 8% 17%;
   --input: 225 7% 26%;
   --ring: 25 85% 60%;
@@ -161,12 +150,18 @@
     -webkit-tap-highlight-color: transparent; /* we give our own :active feedback */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* Keep focused and targeted elements clear of the sticky header (WCAG 2.4.11).
-       The header is two rows on phones, one row from md and on landscape phones. */
-    scroll-padding-top: 7.5rem;
-    @media (width >= 48rem), (orientation: landscape) and (max-height: 32rem) {
-      scroll-padding-top: 5rem;
+    /* Height of the fixed header's content (it adds the safe-area inset and its
+       1px border on top). Two rows on phones, one row from md, and a short single
+       row on landscape phones. The header's spacer reads the same value. */
+    --header-h: 6.25rem; /* two 44px touch rows + 6px breathing room above and below */
+    @media (width >= 48rem) {
+      --header-h: 3.5rem;
     }
+    @media (orientation: landscape) and (max-height: 32rem) and (pointer: coarse) {
+      --header-h: 3rem;
+    }
+    /* Keep focused and targeted elements clear of the fixed header (WCAG 2.4.11). */
+    scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 1rem);
   }
   body {
     @apply bg-background text-foreground;
@@ -209,16 +204,30 @@
 /* The content column, shared by header, sections and footer. */
 @utility frame {
   width: 100%;
-  max-width: 64rem;
+  max-width: 85rem;
   margin-inline: auto;
 }
 
 /* Page texture, fixed behind everything: a hairline grid that fades out below
-   the header, fine horizontal scanlines, and a faint warm glow top-left. */
+   the header, fine horizontal scanlines, and a faint warm glow top-left.
+   Scanlines repeat every 4px and grid cells are 40px (ten scanlines), both from
+   the top edge, so each horizontal grid line lands exactly on a scanline instead
+   of sitting beside one and reading as a thicker line. Keep them in step. */
 @utility bg-texture {
-  background-image:
-    radial-gradient(ellipse 40rem 24rem at 0% 0%, hsl(var(--brand) / 0.07), transparent 70%),
-    repeating-linear-gradient(to bottom, var(--color-grid) 0 1px, transparent 1px 4px);
+  background-image: radial-gradient(ellipse 45rem 45rem at 0% 0%, hsl(var(--brand) / 0.08), transparent 70%);
+  /* Scanlines: full strength at the top, easing to 60% where the grid has faded
+     out, so they stay faintly visible down the page. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-grid) 50%, transparent) 0 1px,
+      transparent 1px 4px
+    );
+    mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.6) 70%);
+  }
   &::before {
     content: "";
     position: absolute;
@@ -226,8 +235,26 @@
     background-image:
       linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
       linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
-    background-size: 4.25rem 4.25rem;
+    background-size: 40px 40px;
     mask-image: linear-gradient(to bottom, #000, transparent 70%);
+  }
+}
+
+/* The footer's closing wordmark: letters filled with a vertical gradient that
+   fades out downward, the brackets in amber, the whole word dissolving into the
+   bottom of the page. Fill only: an outline (text-stroke) shows the variable
+   font's overlapping contours as stray seams. Decorative (aria-hidden). */
+@utility wordmark-ghost {
+  color: transparent;
+  background-image: linear-gradient(to bottom, hsl(var(--foreground) / 0.13), hsl(var(--foreground) / 0.02) 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  & span {
+    color: transparent;
+    background-image: linear-gradient(to bottom, hsl(var(--logo) / 0.3), hsl(var(--logo) / 0.03) 75%);
+    -webkit-background-clip: text;
+    background-clip: text;
   }
 }
 
@@ -293,6 +320,9 @@
   from {
     transform: scaleX(0);
   }
+  to {
+    transform: scaleX(1);
+  }
 }
 @utility scroll-progress {
   @supports (animation-timeline: scroll()) {
@@ -304,6 +334,9 @@
       height: 2px;
       background: var(--color-brand);
       transform-origin: left;
+      /* Empty by default: on a page too short to scroll the timeline is inactive,
+         and the line must not show at full width. */
+      transform: scaleX(0);
       pointer-events: none;
       animation: scroll-progress linear both;
       animation-timeline: scroll(root);

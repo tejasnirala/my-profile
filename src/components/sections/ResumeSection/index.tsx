@@ -9,19 +9,19 @@ import { EXPERIENCE } from '@/constants/experience';
 import { EDUCATION } from '@/constants/education';
 import { CERTIFICATIONS } from '@/constants/certification';
 import { HOBBIES } from '@/constants/hobbies';
-import { PROFILE } from '@/constants/profile';
+import { RESUME_INTRO } from '@/constants/profile';
 import { stagger } from '@/lib/motion';
 
 export const ResumeSection = () => {
   return (
     <>
-      <Section innerClassName="flex flex-col gap-8 pt-10 md:flex-row md:items-end md:justify-between md:pt-16">
+      <Section innerClassName="flex flex-col gap-8 pt-6 md:flex-row md:items-end md:justify-between md:pt-10">
         <SectionHeader
           as="h1"
           eyebrow="resume"
           title="Experience &"
           emphasis="education."
-          intro={`${PROFILE.title} with ${PROFILE.yearsOfExperience} years across SaaS, enterprise and blockchain platforms.`}
+          intro={RESUME_INTRO}
           className="enter"
           style={stagger(0)}
         />
@@ -39,7 +39,7 @@ export const ResumeSection = () => {
 
       <Section innerClassName="space-y-10">
         <SectionHeader eyebrow="experience" title="Where I've" emphasis="worked." className="enter" style={stagger(2)} />
-        <ol role="list" className="enter" style={stagger(3)}>
+        <ol role="list">
           {EXPERIENCE.map((exp) => (
             <TimelineItem key={`${exp.company}-${exp.role}`} title={exp.role} period={exp.period} subtitle={exp.company} meta={exp.location}>
               <div className="space-y-6">
@@ -79,7 +79,7 @@ export const ResumeSection = () => {
                   href={cert.file}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group mt-2 -mx-1 inline-flex items-center gap-1.5 px-1 py-1 pointer-coarse:py-2.5 text-sm font-semibold text-brand select-none hover:underline transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group mt-2 -mx-1 inline-flex items-center gap-1.5 px-1 py-1 pointer-coarse:py-3 text-sm font-semibold text-brand select-none hover:underline transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <ExternalLink aria-hidden className="size-4" /> View certificate
                   <span className="sr-only">: {cert.name}</span>
