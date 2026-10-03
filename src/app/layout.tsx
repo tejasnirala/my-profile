@@ -1,5 +1,5 @@
 import type { Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -9,6 +9,14 @@ import { THEME_COLORS, themeScript } from "@/lib/theme";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+// Mono is for small labels only, so it isn't preloaded: it must not compete
+// with the first paint, and swapping it in late is barely visible.
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  preload: false,
 });
 
 // `viewport-fit=cover` lets the page paint under the notch; `gutter` and the
@@ -39,7 +47,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body
-        className={`${geistSans.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <script
           type="application/ld+json"
@@ -51,9 +59,13 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <div className="min-h-svh w-full bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground flex flex-col">
+        <div className="relative isolate min-h-svh w-full bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground flex flex-col">
+          {/* Decoration: a hairline grid behind the top of the page, and the two
+              rails that frame the content column from header to footer. */}
+          <div aria-hidden className="bg-grid pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem]" />
+          <div aria-hidden className="frame pointer-events-none absolute inset-y-0 left-1/2 -z-10 hidden -translate-x-1/2 border-x md:block" />
           <Header />
-          <main id="main" tabIndex={-1} className="flex-1 container mx-auto gutter py-8 md:py-12 short:py-6 max-w-5xl outline-hidden">
+          <main id="main" tabIndex={-1} className="frame flex-1 outline-hidden">
             {children}
           </main>
           <Footer />

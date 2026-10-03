@@ -9,8 +9,8 @@ export const THEME_STORAGE_KEY = 'theme';
 
 /** Page background per theme (matches `--background` in globals.css). */
 export const THEME_COLORS = {
-  light: '#ffffff',
-  dark: '#09090b',
+  light: '#fafafa',
+  dark: '#0a0a0a',
 } as const;
 
 export type Theme = keyof typeof THEME_COLORS;
