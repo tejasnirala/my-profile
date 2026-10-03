@@ -3,18 +3,19 @@ import React from 'react';
 type Variant = "default" | "outline" | "ghost" | "secondary";
 type Size = "default" | "sm" | "lg" | "icon";
 
+// `default` is the amber call to action; everything else stays quiet and hairline.
 const variants: Record<Variant, string> = {
-  default: "bg-primary text-primary-foreground hover:bg-primary/90",
-  outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+  default: "bg-highlight text-highlight-foreground font-semibold hover:brightness-95",
+  outline: "border border-input bg-background/60 hover:bg-secondary hover:border-foreground/40",
   ghost: "hover:bg-accent hover:text-accent-foreground",
   secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
 };
 
 // Touch screens get 44px targets (Apple's minimum); mice keep the denser sizes.
 const sizes: Record<Size, string> = {
-  default: "h-10 px-4 py-2 pointer-coarse:h-11",
-  sm: "h-9 rounded-md px-3 pointer-coarse:h-11",
-  lg: "h-11 rounded-md px-8",
+  default: "h-11 px-5",
+  sm: "h-9 px-3 pointer-coarse:h-11",
+  lg: "h-12 px-8",
   icon: "size-9 pointer-coarse:size-11",
 };
 
@@ -29,7 +30,7 @@ export const buttonClasses = (
   size: Size = "default",
   className = "",
 ) =>
-  `inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium select-none [-webkit-touch-callout:none] ring-offset-background transition-[color,background-color,border-color,scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`;
+  `inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium select-none [-webkit-touch-callout:none] ring-offset-background transition-[color,background-color,border-color,filter,scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`;
 
 type ButtonProps = React.ComponentProps<"button"> & {
   variant?: Variant;

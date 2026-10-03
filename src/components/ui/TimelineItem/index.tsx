@@ -1,25 +1,29 @@
 import React from 'react';
-import { Badge } from '@/components/ui/Badge';
 
 type TimelineItemProps = {
   title: string;
   period: string;
   subtitle: string;
+  /** Shown under the period, e.g. the location. */
+  meta?: string;
   children?: React.ReactNode;
 };
 
-/** One entry on the resume timeline. Render inside an `<ol>`. */
-export const TimelineItem = ({ title, period, subtitle, children }: TimelineItemProps) => (
-  <li className="reveal relative pl-8 border-l border-border pb-2 last:pb-0">
-    <div aria-hidden className="absolute left-[-5px] top-1 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-background" />
-
-    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-1">
-      <h3 className="text-xl font-bold tracking-[-0.01em] text-primary">{title}</h3>
-      <Badge variant="secondary" className="w-fit shrink-0">{period}</Badge>
+/**
+ * One entry on the resume: the period in a narrow left column, the details on
+ * the right, separated from the next entry by a hairline. Render inside an `<ol>`.
+ */
+export const TimelineItem = ({ title, period, subtitle, meta, children }: TimelineItemProps) => (
+  <li className="reveal grid gap-3 border-t border-border py-8 first:border-t-0 first:pt-0 last:pb-0 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-8">
+    <div className="space-y-1">
+      <p className="text-sm font-semibold text-brand">{period}</p>
+      {meta && <p className="text-xs text-muted-foreground">{meta}</p>}
     </div>
 
-    <p className="text-lg font-semibold text-foreground">{subtitle}</p>
-
-    {children && <div className="mt-3">{children}</div>}
+    <div>
+      <h3 className="text-lg font-bold leading-snug tracking-[-0.01em]">{title}</h3>
+      <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+      {children && <div className="mt-5">{children}</div>}
+    </div>
   </li>
 );

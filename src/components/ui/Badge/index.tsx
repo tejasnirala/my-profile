@@ -2,20 +2,20 @@ import React from 'react';
 
 type BadgeProps = {
   children: React.ReactNode;
-  variant?: "default" | "secondary" | "outline";
+  variant?: "brand" | "outline" | "secondary";
   className?: string;
 };
 
 // Badges are labels, not controls, so they get no hover or focus styles.
-// Small text gets slightly positive tracking for legibility.
-export const Badge = ({ children, variant = "default", className = "" }: BadgeProps) => {
+// Small caps text gets wide positive tracking for legibility.
+export const Badge = ({ children, variant = "outline", className = "" }: BadgeProps) => {
   const variants = {
-    default: "border-transparent bg-primary text-primary-foreground",
+    brand: "border-brand/40 bg-background/60 text-brand font-semibold",
+    outline: "border-border bg-background/60 text-muted-foreground",
     secondary: "border-transparent bg-secondary text-secondary-foreground",
-    outline: "text-foreground",
   };
   return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-[0.01em] ${variants[variant]} ${className}`}>
+    <span className={`inline-flex items-center border px-2 py-1 text-xs uppercase tracking-[0.08em] ${variants[variant]} ${className}`}>
       {children}
     </span>
   );

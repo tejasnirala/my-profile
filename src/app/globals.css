@@ -46,15 +46,19 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
+  /* Brand: burnt orange for eyebrows, emphasis and numbering; amber for the
+     primary action and the logo brackets; green for the "available" status. */
+  --color-brand: hsl(var(--brand));
+  --color-highlight: hsl(var(--highlight));
+  --color-highlight-foreground: hsl(var(--highlight-foreground));
+  --color-logo: hsl(var(--logo));
   --color-success: hsl(var(--success));
   --color-grid: hsl(var(--grid));
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-
+  /* Square corners throughout; only `rounded-full` (dots, toggles) stays round. */
   --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-sm: var(--radius);
 
   /* Motion tokens. These replace Tailwind's built-in `ease-out` / `ease-in-out`,
      which are too weak to feel intentional. */
@@ -65,69 +69,86 @@
   --default-transition-duration: 150ms;
 }
 
+/* next/font sets --font-jetbrains-mono on <body>, below :root, so the font token
+   must be inlined into the utilities instead of resolved on :root (where it
+   would be undefined and fall back to the browser's sans-serif). */
+@theme inline {
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 /* 3. Define the variables */
 :root {
   color-scheme: light;
-  --background: 0 0% 98%;
-  --foreground: 0 0% 7%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 7%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 7%;
-  --primary: 0 0% 7%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 0 0% 94%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 94%;
-  --muted-foreground: 0 0% 38%; /* ≥4.5:1 on --background and --secondary (WCAG 1.4.3) */
-  --accent: 0 0% 94%;
-  --accent-foreground: 0 0% 9%;
+  --background: 228 20% 96%;
+  --foreground: 225 20% 8%;
+  --card: 228 25% 98%;
+  --card-foreground: 225 20% 8%;
+  --popover: 228 25% 98%;
+  --popover-foreground: 225 20% 8%;
+  --primary: 225 20% 8%;
+  --primary-foreground: 228 20% 96%;
+  --secondary: 228 14% 91%;
+  --secondary-foreground: 225 20% 8%;
+  --muted: 228 14% 91%;
+  --muted-foreground: 225 9% 37%; /* ≥4.5:1 on --background and --secondary (WCAG 1.4.3) */
+  --accent: 228 14% 91%;
+  --accent-foreground: 225 20% 8%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 89%;
-  --input: 0 0% 85%;
-  --ring: 0 0% 7%;
-  --success: 142 72% 32%;
-  --grid: 0 0% 0% / 0.05;
-  --radius: 0.375rem;
+  --border: 228 10% 84%;
+  --input: 228 9% 74%;
+  --ring: 22 75% 38%;
+  --brand: 22 75% 37%; /* ≥4.5:1 as text on --background */
+  --highlight: 45 86% 66%;
+  --highlight-foreground: 225 20% 8%;
+  --logo: 40 85% 45%;
+  --success: 142 64% 28%;
+  --grid: 225 20% 20% / 0.06;
+  --radius: 0px;
 }
 
 .dark {
   color-scheme: dark;
-  --background: 0 0% 4%;
-  --foreground: 0 0% 93%;
-  --card: 0 0% 6%;
-  --card-foreground: 0 0% 93%;
-  --popover: 0 0% 6%;
-  --popover-foreground: 0 0% 93%;
-  --primary: 0 0% 93%;
-  --primary-foreground: 0 0% 4%;
-  --secondary: 0 0% 11%;
-  --secondary-foreground: 0 0% 93%;
-  --muted: 0 0% 11%;
-  --muted-foreground: 0 0% 62%;
-  --accent: 0 0% 11%;
-  --accent-foreground: 0 0% 93%;
+  --background: 225 14% 5%;
+  --foreground: 220 15% 92%;
+  --card: 225 12% 7%;
+  --card-foreground: 220 15% 92%;
+  --popover: 225 12% 7%;
+  --popover-foreground: 220 15% 92%;
+  --primary: 220 15% 92%;
+  --primary-foreground: 225 14% 5%;
+  --secondary: 225 9% 12%;
+  --secondary-foreground: 220 15% 92%;
+  --muted: 225 9% 12%;
+  --muted-foreground: 222 8% 63%;
+  --accent: 225 9% 12%;
+  --accent-foreground: 220 15% 92%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14%;
-  --input: 0 0% 20%;
-  --ring: 0 0% 83%;
-  --success: 142 70% 50%;
-  --grid: 0 0% 100% / 0.05;
+  --border: 225 8% 17%;
+  --input: 225 7% 26%;
+  --ring: 25 85% 60%;
+  --brand: 25 85% 60%;
+  --highlight: 45 86% 62%;
+  --highlight-foreground: 225 20% 8%;
+  --logo: 42 90% 55%;
+  --success: 142 64% 50%;
+  --grid: 220 15% 90% / 0.05;
 }
 
 /* Increased contrast: defined borders and stronger secondary text */
 @media (prefers-contrast: more) {
   :root {
-    --border: 0 0% 55%;
-    --input: 0 0% 55%;
-    --muted-foreground: 0 0% 26%;
+    --border: 228 8% 50%;
+    --input: 228 8% 50%;
+    --muted-foreground: 225 10% 24%;
+    --brand: 22 80% 28%;
   }
   .dark {
-    --border: 0 0% 50%;
-    --input: 0 0% 50%;
-    --muted-foreground: 0 0% 84%;
+    --border: 225 6% 50%;
+    --input: 225 6% 50%;
+    --muted-foreground: 222 8% 84%;
+    --brand: 25 90% 70%;
   }
 }
 
@@ -185,29 +206,36 @@
   }
 }
 
-/* The page frame: content column width, shared by header, main and footer. */
+/* The content column, shared by header, sections and footer. */
 @utility frame {
   width: 100%;
   max-width: 64rem;
   margin-inline: auto;
 }
 
-/* Hairline grid behind the top of the page, fading out from the centre-top. */
-@utility bg-grid {
+/* Page texture, fixed behind everything: a hairline grid that fades out below
+   the header, fine horizontal scanlines, and a faint warm glow top-left. */
+@utility bg-texture {
   background-image:
-    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
-  background-size: 3.5rem 3.5rem;
-  background-position: center top;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 100%);
+    radial-gradient(ellipse 40rem 24rem at 0% 0%, hsl(var(--brand) / 0.07), transparent 70%),
+    repeating-linear-gradient(to bottom, var(--color-grid) 0 1px, transparent 1px 4px);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+    background-size: 4.25rem 4.25rem;
+    mask-image: linear-gradient(to bottom, #000, transparent 70%);
+  }
 }
 
-/* Small uppercase mono label used for eyebrows, metadata and tags. */
-@utility label-mono {
-  font-family: var(--font-mono);
+/* Small uppercase label: card kickers, stat labels, footer column headings. */
+@utility label-caps {
   font-size: 0.75rem;
   line-height: 1rem;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -258,31 +286,27 @@
   }
 }
 
-/* Header edge: no divider at the top of the page, then the divider fades in once
-   content starts scrolling underneath the translucent header. The line is a
-   pseudo-element whose opacity is animated, so it runs on the compositor
-   (animating border-color would repaint on every scroll frame). */
-@keyframes scroll-edge {
-  to {
-    opacity: 1;
+/* Reading progress: an orange line along the bottom of the header that grows
+   with the page scroll. It scales on the compositor, and browsers without
+   scroll-driven animations simply don't show it. */
+@keyframes scroll-progress {
+  from {
+    transform: scaleX(0);
   }
 }
-@utility scroll-edge {
-  border-bottom: 1px solid var(--color-border);
+@utility scroll-progress {
   @supports (animation-timeline: scroll()) {
-    border-bottom-color: transparent;
     &::after {
       content: "";
       position: absolute;
       inset-inline: 0;
       bottom: -1px;
-      height: 1px;
-      background: var(--color-border);
-      opacity: 0;
+      height: 2px;
+      background: var(--color-brand);
+      transform-origin: left;
       pointer-events: none;
-      animation: scroll-edge linear both;
+      animation: scroll-progress linear both;
       animation-timeline: scroll(root);
-      animation-range: 0 4rem;
     }
   }
 }
@@ -297,11 +321,14 @@
 /* Print the resume fully: no half-revealed entries, no sticky header */
 @media print {
   .enter,
-  .reveal,
-  .scroll-edge::after {
+  .reveal {
     animation: none !important;
   }
   header {
     position: static;
+  }
+  .scroll-progress::after,
+  .bg-texture {
+    display: none;
   }
 }

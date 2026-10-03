@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { buttonClasses } from '@/components/ui/Button';
+import { Section } from '@/components/ui/Section';
 import { NOT_FOUND, PAGES } from '@/constants/pages';
 import { stagger } from '@/lib/motion';
 
@@ -11,9 +12,11 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="max-w-xl mx-auto py-12 text-center space-y-6">
-      <p className="enter text-sm font-semibold text-muted-foreground" style={stagger(0)}>404</p>
-      <h1 className="enter text-4xl md:text-5xl font-extrabold leading-[1.05] tracking-[-0.03em]" style={stagger(1)}>
+    <Section innerClassName="max-w-xl py-20 text-center space-y-6 md:py-28">
+      <p className="enter text-sm text-brand" style={stagger(0)}>
+        <span aria-hidden>{'// '}</span>error 404
+      </p>
+      <h1 className="enter text-4xl md:text-5xl font-extrabold leading-[1.05] tracking-[-0.04em]" style={stagger(1)}>
         {NOT_FOUND.title}
       </h1>
       <p className="enter text-muted-foreground" style={stagger(2)}>{NOT_FOUND.message}</p>
@@ -24,6 +27,6 @@ export default function NotFound() {
           </Link>
         ))}
       </nav>
-    </div>
+    </Section>
   );
 }

@@ -1,108 +1,106 @@
-import React from 'react';
-import { Download, MapPin, Briefcase, ExternalLink } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 import { buttonClasses } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { NewTabHint } from '@/components/ui/NewTabHint';
-import { Separator } from '@/components/ui/Separator';
+import { Section } from '@/components/ui/Section';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 import { TimelineItem } from '@/components/ui/TimelineItem';
 import { EXPERIENCE } from '@/constants/experience';
 import { EDUCATION } from '@/constants/education';
 import { CERTIFICATIONS } from '@/constants/certification';
 import { HOBBIES } from '@/constants/hobbies';
-import { getPage } from '@/lib/seo';
+import { PROFILE } from '@/constants/profile';
 import { stagger } from '@/lib/motion';
-
-const sectionHeading = 'reveal text-3xl font-bold tracking-tight mb-6';
 
 export const ResumeSection = () => {
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
-      {/* The page's visible sections are peers (Experience, Education…), so the
-          page title is the h1 for the heading outline, shown to screen readers only. */}
-      <h1 className="sr-only">{getPage('resume').title}</h1>
-      <div className="enter flex flex-wrap items-center justify-between gap-4" style={stagger(0)}>
-        <h2 className="text-3xl font-bold tracking-tight">Experience</h2>
+    <>
+      <Section innerClassName="flex flex-col gap-8 pt-10 md:flex-row md:items-end md:justify-between md:pt-16">
+        <SectionHeader
+          as="h1"
+          eyebrow="resume"
+          title="Experience &"
+          emphasis="education."
+          intro={`${PROFILE.title} with ${PROFILE.yearsOfExperience} years across SaaS, enterprise and blockchain platforms.`}
+          className="enter"
+          style={stagger(0)}
+        />
         <a
           href="/Tejas_Nirala_Resume.pdf"
           download
-          className={buttonClasses("outline", "sm", "group")}
+          className={buttonClasses('default', 'default', 'enter group shrink-0 self-start md:self-auto')}
+          style={stagger(1)}
         >
-          <Download className="h-4 w-4 transition-[translate] duration-200 ease-out motion-safe:group-hover:translate-y-0.5" />
-          Download Resume
+          <Download aria-hidden className="size-4 transition-[translate] duration-200 ease-out motion-safe:group-hover:translate-y-0.5" />
+          Download resume
           <span className="sr-only"> (PDF)</span>
         </a>
-      </div>
+      </Section>
 
-      <ol role="list" className="enter space-y-10" style={stagger(1)}>
-        {EXPERIENCE.map((exp) => (
-          <TimelineItem key={`${exp.company}-${exp.role}`} title={exp.role} period={exp.period} subtitle={exp.company}>
-            <div className="space-y-6">
-              {exp.engagements.map((engagement) => (
-                <div key={engagement.name}>
-                  <h4 className="text-base font-semibold text-foreground mb-2 flex items-center gap-2">
-                    <Briefcase className="h-4 w-4 shrink-0 text-muted-foreground" />
-                    {engagement.name}
-                  </h4>
-                  <ul role="list" className="list-disc list-outside ml-4 space-y-1 text-sm text-muted-foreground">
-                    {engagement.achievements.map((ach) => (
-                      <li key={ach} className="leading-relaxed">{ach}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </TimelineItem>
-        ))}
-      </ol>
+      <Section innerClassName="space-y-10">
+        <SectionHeader eyebrow="experience" title="Where I've" emphasis="worked." className="enter" style={stagger(2)} />
+        <ol role="list" className="enter" style={stagger(3)}>
+          {EXPERIENCE.map((exp) => (
+            <TimelineItem key={`${exp.company}-${exp.role}`} title={exp.role} period={exp.period} subtitle={exp.company} meta={exp.location}>
+              <div className="space-y-6">
+                {exp.engagements.map((engagement) => (
+                  <div key={engagement.name}>
+                    <h4 className="mb-3 text-sm font-semibold text-foreground">{engagement.name}</h4>
+                    <ul role="list" className="ml-4 list-[square] space-y-2 text-sm text-muted-foreground marker:text-brand">
+                      {engagement.achievements.map((ach) => (
+                        <li key={ach} className="pl-1 leading-relaxed">{ach}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </TimelineItem>
+          ))}
+        </ol>
+      </Section>
 
-      <Separator className="my-8" />
+      <Section innerClassName="space-y-10">
+        <SectionHeader eyebrow="education" title="Where I" emphasis="studied." className="reveal" />
+        <ol role="list">
+          {EDUCATION.map((edu) => (
+            <TimelineItem key={edu.school} title={edu.degree} period={edu.period} subtitle={edu.school} meta={edu.location} />
+          ))}
+        </ol>
+      </Section>
 
-      <h2 className={sectionHeading}>Education</h2>
-      <ol role="list" className="space-y-10">
-        {EDUCATION.map((edu) => (
-          <TimelineItem key={edu.school} title={edu.degree} period={edu.period} subtitle={edu.school}>
-            <p className="flex items-center text-sm text-muted-foreground">
-              <MapPin className="mr-2 h-4 w-4 shrink-0" /> {edu.location}
-            </p>
-          </TimelineItem>
-        ))}
-      </ol>
+      <Section innerClassName="space-y-10">
+        <SectionHeader eyebrow="certifications" title="Certifications &" emphasis="awards." className="reveal" />
+        <ol role="list">
+          {CERTIFICATIONS.map((cert) => (
+            <TimelineItem key={cert.name} title={cert.name} period={cert.period} subtitle={cert.institution}>
+              <p className="text-sm text-muted-foreground">{cert.description}</p>
+              {cert.file && (
+                <a
+                  href={cert.file}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-2 -mx-1 inline-flex items-center gap-1.5 px-1 py-1 pointer-coarse:py-2.5 text-sm font-semibold text-brand select-none hover:underline transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <ExternalLink aria-hidden className="size-4" /> View certificate
+                  <span className="sr-only">: {cert.name}</span>
+                  <NewTabHint />
+                </a>
+              )}
+            </TimelineItem>
+          ))}
+        </ol>
+      </Section>
 
-      <Separator className="my-8" />
-
-      <h2 className={sectionHeading}>Certifications & Awards</h2>
-      <ol role="list" className="space-y-10">
-        {CERTIFICATIONS.map((cert) => (
-          <TimelineItem key={cert.name} title={cert.name} period={cert.period} subtitle={cert.institution}>
-            <p className="text-sm text-muted-foreground">{cert.description}</p>
-            {cert.file && (
-              <a
-                href={cert.file}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 -mx-1 inline-flex items-center gap-1.5 rounded-md px-1 py-1 pointer-coarse:py-2.5 text-sm font-medium text-primary select-none hover:underline transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <ExternalLink className="h-4 w-4" /> View Certificate
-                <span className="sr-only">: {cert.name}</span>
-                <NewTabHint />
-              </a>
-            )}
-          </TimelineItem>
-        ))}
-      </ol>
-
-      <Separator className="my-8" />
-
-      <h2 className={sectionHeading}>Hobbies & Interests</h2>
-      <ul role="list" className="reveal flex flex-wrap gap-3">
-        {HOBBIES.map((hobby) => (
-          <li key={hobby}>
-            <Badge variant="secondary" className="text-base px-4 py-2 bg-secondary/80">
-              {hobby}
-            </Badge>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <Section innerClassName="space-y-8">
+        <SectionHeader eyebrow="beyond work" title="Hobbies &" emphasis="interests." className="reveal" />
+        <ul role="list" className="reveal flex flex-wrap gap-3">
+          {HOBBIES.map((hobby) => (
+            <li key={hobby}>
+              <Badge className="px-3 py-2 text-sm">{hobby}</Badge>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    </>
   );
 };
