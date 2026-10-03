@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { EDUCATION } from "@/constants/education";
-import { EXPERIENCE } from "@/constants/experience";
+import { EXPERIENCE, isCurrent } from "@/constants/experience";
 import { PAGES, type PageId } from "@/constants/pages";
 import { PROFILE, SOCIAL_LINKS } from "@/constants/profile";
 
@@ -29,7 +29,7 @@ const [firstName, ...otherNames] = PROFILE.name.split(" ");
 const lastName = otherNames.join(" ");
 
 /** The experience whose period runs to "Present", if any. */
-const currentExperience = EXPERIENCE.find((e) => e.period.endsWith("Present"));
+const currentExperience = EXPERIENCE.find(isCurrent);
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(PROFILE.url),
@@ -89,7 +89,6 @@ export const personJsonLd = {
   url: PROFILE.url,
   jobTitle: PROFILE.title,
   email: `mailto:${PROFILE.email}`,
-  telephone: PROFILE.phone,
   description: PROFILE.about,
   address: {
     "@type": "PostalAddress",
@@ -135,12 +134,27 @@ const INDEXABLE: Metadata["robots"] = {
 
 /** Title, description, canonical URL and indexing rules for a page, from the page registry. */
 export const pageMetadata = (id: PageId): Metadata => {
-  const { path, title, description } = getPage(id);
+  const { path, title, description, socialDescription } = getPage(id);
+  // Link previews name the page they link to. A page's `openGraph`/`twitter`
+  // replace the site-wide objects wholesale, so start from those; the share image
+  // still comes from app/opengraph-image.tsx (file conventions win).
+  const socialTitle = title ? `${title} | ${PROFILE.name}` : undefined;
   return {
     ...(title && { title }),
     ...(description && { description }),
     alternates: { canonical: path },
     robots: INDEXABLE,
+    openGraph: {
+      ...siteMetadata.openGraph,
+      url: path,
+      ...(socialTitle && { title: socialTitle }),
+      ...(socialDescription && { description: socialDescription }),
+    },
+    twitter: {
+      ...siteMetadata.twitter,
+      ...(socialTitle && { title: socialTitle }),
+      ...(socialDescription && { description: socialDescription }),
+    },
   };
 };
 
@@ -163,9 +177,13 @@ for (const page of PAGES) {
     !page.description || page.description.length <= MAX_DESCRIPTION,
     `"${page.id}" description is ${page.description?.length} chars (max ${MAX_DESCRIPTION})`,
   );
+  check(
+    !page.socialDescription || page.socialDescription.length <= MAX_SOCIAL_DESCRIPTION,
+    `"${page.id}" social description is ${page.socialDescription?.length} chars (max ${MAX_SOCIAL_DESCRIPTION})`,
+  );
 }
 check(
-  EXPERIENCE.filter((e) => e.period.endsWith("Present")).length <= 1,
+  EXPERIENCE.filter(isCurrent).length <= 1,
   "more than one experience runs to \"Present\"",
 );
 for (const skill of PROFILE.featuredSkills) {

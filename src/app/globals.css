@@ -1,12 +1,16 @@
 @import "tailwindcss";
+/* Tailwind scans the whole repo for class names; the skill docs in .claude/ are
+   full of example classes that would otherwise ship in every page's inlined CSS. */
+@source not "../../.claude";
 
 /* 1. Tell Tailwind v4 to look for the .dark class for dark mode variants */
 @variant dark (&:where(.dark, .dark *));
 
 /* Accessibility and orientation variants Tailwind doesn't ship */
 @custom-variant reduce-transparency (@media (prefers-reduced-transparency: reduce));
-/* Phones in landscape: wide enough for desktop breakpoints, but very short */
-@custom-variant short (@media (orientation: landscape) and (max-height: 32rem));
+/* Phones in landscape: wide enough for desktop breakpoints, but very short. Touch
+   only, so a short desktop window (e.g. devtools docked) keeps the desktop layout. */
+@custom-variant short (@media (orientation: landscape) and (max-height: 32rem) and (pointer: coarse));
 /* Hover only for precise pointers. Tailwind's default checks `(hover: hover)`
    alone, which some touch devices report; this also covers `group-hover:`. */
 @custom-variant hover {
@@ -31,93 +35,109 @@
   --color-secondary: hsl(var(--secondary));
   --color-secondary-foreground: hsl(var(--secondary-foreground));
 
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-
   --color-muted: hsl(var(--muted));
   --color-muted-foreground: hsl(var(--muted-foreground));
 
   --color-accent: hsl(var(--accent));
   --color-accent-foreground: hsl(var(--accent-foreground));
 
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
+  /* Brand: burnt orange for eyebrows, emphasis and numbering; amber for the
+     primary action and the logo brackets; green for the "available" status. */
+  --color-brand: hsl(var(--brand));
+  --color-highlight: hsl(var(--highlight));
+  --color-highlight-foreground: hsl(var(--highlight-foreground));
+  --color-logo: hsl(var(--logo));
+  --color-success: hsl(var(--success));
+  --color-grid: hsl(var(--grid));
+
+  /* Square corners throughout; only `rounded-full` (dots, toggles) stays round. */
   --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius);
+  --radius-sm: var(--radius);
 
   /* Motion tokens. These replace Tailwind's built-in `ease-out` / `ease-in-out`,
      which are too weak to feel intentional. */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* entering, exiting, press feedback */
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* moving on screen */
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* sheets and drawers */
   --default-transition-timing-function: ease; /* hover and color changes */
   --default-transition-duration: 150ms;
+}
+
+/* next/font sets --font-jetbrains-mono on <body>, below :root, so the font token
+   must be inlined into the utilities instead of resolved on :root (where it
+   would be undefined and fall back to the browser's sans-serif). */
+@theme inline {
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /* 3. Define the variables */
 :root {
   color-scheme: light;
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 240 5.9% 10%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 240 4.8% 95.9%;
-  --secondary-foreground: 240 5.9% 10%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 44%; /* ≥4.5:1 on --background and --secondary (WCAG 1.4.3) */
-  --accent: 240 4.8% 95.9%;
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 240 10% 3.9%;
-  --radius: 0.5rem;
+  --background: 228 20% 96%;
+  --foreground: 225 20% 8%;
+  --card: 228 25% 98%;
+  --card-foreground: 225 20% 8%;
+  --primary: 225 20% 8%;
+  --primary-foreground: 228 20% 96%;
+  --secondary: 228 14% 91%;
+  --secondary-foreground: 225 20% 8%;
+  --muted: 228 14% 91%;
+  --muted-foreground: 225 9% 37%; /* ≥4.5:1 on --background and --secondary (WCAG 1.4.3) */
+  --accent: 228 14% 91%;
+  --accent-foreground: 225 20% 8%;
+  --border: 228 10% 84%;
+  --input: 228 9% 74%;
+  --ring: 22 75% 38%;
+  --brand: 22 75% 37%; /* ≥4.5:1 as text on --background */
+  --highlight: 45 86% 66%;
+  --highlight-foreground: 225 20% 8%;
+  --logo: 40 85% 45%;
+  --success: 142 64% 28%;
+  --grid: 225 20% 20% / 0.06;
+  --radius: 0px;
 }
 
 .dark {
   color-scheme: dark;
-  --background: 240 10% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 240 10% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 240 10% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 240 5.9% 10%;
-  --secondary: 240 3.7% 15.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 240 3.7% 15.9%;
-  --muted-foreground: 240 5% 64.9%;
-  --accent: 240 3.7% 15.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 3.7% 15.9%;
-  --input: 240 3.7% 15.9%;
-  --ring: 240 4.9% 83.9%;
+  --background: 225 14% 5%;
+  --foreground: 220 15% 92%;
+  --card: 225 12% 7%;
+  --card-foreground: 220 15% 92%;
+  --primary: 220 15% 92%;
+  --primary-foreground: 225 14% 5%;
+  --secondary: 225 9% 12%;
+  --secondary-foreground: 220 15% 92%;
+  --muted: 225 9% 12%;
+  --muted-foreground: 222 8% 63%;
+  --accent: 225 9% 12%;
+  --accent-foreground: 220 15% 92%;
+  --border: 225 8% 17%;
+  --input: 225 7% 26%;
+  --ring: 25 85% 60%;
+  --brand: 25 85% 60%;
+  --highlight: 45 86% 62%;
+  --highlight-foreground: 225 20% 8%;
+  --logo: 42 90% 55%;
+  --success: 142 64% 50%;
+  --grid: 220 15% 90% / 0.05;
 }
 
 /* Increased contrast: defined borders and stronger secondary text */
 @media (prefers-contrast: more) {
   :root {
-    --border: 240 5.9% 60%;
-    --input: 240 5.9% 60%;
-    --muted-foreground: 240 5% 28%;
+    --border: 228 8% 50%;
+    --input: 228 8% 50%;
+    --muted-foreground: 225 10% 24%;
+    --brand: 22 80% 28%;
   }
   .dark {
-    --border: 240 5% 50%;
-    --input: 240 5% 50%;
-    --muted-foreground: 240 5% 84%;
+    --border: 225 6% 50%;
+    --input: 225 6% 50%;
+    --muted-foreground: 222 8% 84%;
+    --brand: 25 90% 70%;
   }
 }
 
@@ -130,12 +150,18 @@
     -webkit-tap-highlight-color: transparent; /* we give our own :active feedback */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
-    /* Keep focused and targeted elements clear of the sticky header (WCAG 2.4.11).
-       The header is two rows on phones, one row from md and on landscape phones. */
-    scroll-padding-top: 7.5rem;
-    @media (width >= 48rem), (orientation: landscape) and (max-height: 32rem) {
-      scroll-padding-top: 5rem;
+    /* Height of the fixed header's content (it adds the safe-area inset and its
+       1px border on top). Two rows on phones, one row from md, and a short single
+       row on landscape phones. The header's spacer reads the same value. */
+    --header-h: 6.25rem; /* two 44px touch rows + 6px breathing room above and below */
+    @media (width >= 48rem) {
+      --header-h: 3.5rem;
     }
+    @media (orientation: landscape) and (max-height: 32rem) and (pointer: coarse) {
+      --header-h: 3rem;
+    }
+    /* Keep focused and targeted elements clear of the fixed header (WCAG 2.4.11). */
+    scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 1rem);
   }
   body {
     @apply bg-background text-foreground;
@@ -173,6 +199,71 @@
     padding-left: max(2rem, env(safe-area-inset-left));
     padding-right: max(2rem, env(safe-area-inset-right));
   }
+}
+
+/* The content column, shared by header, sections and footer. */
+@utility frame {
+  width: 100%;
+  max-width: 85rem;
+  margin-inline: auto;
+}
+
+/* Page texture, fixed behind everything: a hairline grid that fades out below
+   the header, fine horizontal scanlines, and a faint warm glow top-left.
+   Scanlines repeat every 4px and grid cells are 40px (ten scanlines), both from
+   the top edge, so each horizontal grid line lands exactly on a scanline instead
+   of sitting beside one and reading as a thicker line. Keep them in step. */
+@utility bg-texture {
+  background-image: radial-gradient(ellipse 45rem 45rem at 0% 0%, hsl(var(--brand) / 0.08), transparent 70%);
+  /* Scanlines: full strength at the top, easing to 60% where the grid has faded
+     out, so they stay faintly visible down the page. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-grid) 50%, transparent) 0 1px,
+      transparent 1px 4px
+    );
+    mask-image: linear-gradient(to bottom, #000, rgb(0 0 0 / 0.6) 70%);
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, #000, transparent 70%);
+  }
+}
+
+/* The footer's closing wordmark: letters filled with a vertical gradient that
+   fades out downward, the brackets in amber, the whole word dissolving into the
+   bottom of the page. Fill only: an outline (text-stroke) shows the variable
+   font's overlapping contours as stray seams. Decorative (aria-hidden). */
+@utility wordmark-ghost {
+  color: transparent;
+  background-image: linear-gradient(to bottom, hsl(var(--foreground) / 0.13), hsl(var(--foreground) / 0.02) 75%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  & span {
+    color: transparent;
+    background-image: linear-gradient(to bottom, hsl(var(--logo) / 0.3), hsl(var(--logo) / 0.03) 75%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+/* Small uppercase label: card kickers, stat labels, footer column headings. */
+@utility label-caps {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 /* 6. Motion */
@@ -222,31 +313,33 @@
   }
 }
 
-/* Header edge: no divider at the top of the page, then the divider fades in once
-   content starts scrolling underneath the translucent header. The line is a
-   pseudo-element whose opacity is animated, so it runs on the compositor
-   (animating border-color would repaint on every scroll frame). */
-@keyframes scroll-edge {
+/* Reading progress: an orange line along the bottom of the header that grows
+   with the page scroll. It scales on the compositor, and browsers without
+   scroll-driven animations simply don't show it. */
+@keyframes scroll-progress {
+  from {
+    transform: scaleX(0);
+  }
   to {
-    opacity: 1;
+    transform: scaleX(1);
   }
 }
-@utility scroll-edge {
-  border-bottom: 1px solid var(--color-border);
+@utility scroll-progress {
   @supports (animation-timeline: scroll()) {
-    border-bottom-color: transparent;
     &::after {
       content: "";
       position: absolute;
       inset-inline: 0;
       bottom: -1px;
-      height: 1px;
-      background: var(--color-border);
-      opacity: 0;
+      height: 2px;
+      background: var(--color-brand);
+      transform-origin: left;
+      /* Empty by default: on a page too short to scroll the timeline is inactive,
+         and the line must not show at full width. */
+      transform: scaleX(0);
       pointer-events: none;
-      animation: scroll-edge linear both;
+      animation: scroll-progress linear both;
       animation-timeline: scroll(root);
-      animation-range: 0 4rem;
     }
   }
 }
@@ -261,11 +354,14 @@
 /* Print the resume fully: no half-revealed entries, no sticky header */
 @media print {
   .enter,
-  .reveal,
-  .scroll-edge::after {
+  .reveal {
     animation: none !important;
   }
   header {
     position: static;
+  }
+  .scroll-progress::after,
+  .bg-texture {
+    display: none;
   }
 }

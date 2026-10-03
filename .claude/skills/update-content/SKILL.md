@@ -11,9 +11,9 @@ The site mirrors the resume. Most changes are data-only, in `src/constants/`. Th
 
 | Fact | Update in |
 |---|---|
-| Name, title, email, phone, address, socials | `constants/profile.ts`. Name, title and address also feed page descriptions (`constants/pages.ts`), the OG image, manifest and JSON-LD automatically. Social URLs flow through `SOCIAL_LINKS` to the header buttons, contact card, footer and JSON-LD `sameAs`. |
+| Name, title, email, address, socials (no phone: it is deliberately kept off the site) | `constants/profile.ts`. Name, title and address also feed page descriptions (`constants/pages.ts`), the OG image, manifest and JSON-LD automatically. Social profiles are rows in `SOCIALS` (`constants/profile.ts`); a row's `groups` decides where it is listed (Contact page and footer Contact column, or the footer Elsewhere column), and all of them go into JSON-LD `sameAs`. Adding a profile is one row. |
 | About paragraph | `constants/profile.ts` → `about` (also the JSON-LD `description`) |
-| **Years of experience** | `YEARS_OF_EXPERIENCE` in `constants/profile.ts` only. `about`, the site description (rounded, "~3 years") and the /resume description derive from it. |
+| **Years of experience** | Nothing to edit: it is computed from the `period` dates in `EXPERIENCE` (`workedMonths()` in `constants/experience.ts`). Keep periods as "Mon YYYY - Mon YYYY" or "Mon YYYY - Present"; the build fails on a date it can't read. `about`, the stats card, the /resume intro, the site description ("~3 years") and the /resume description all derive from it. |
 | Skills | `constants/profile.ts` `skills`. If a skill in `featuredSkills` (shown on the share image) is renamed or removed, update that list too. |
 | Hero headline, About highlight cards | `constants/profile.ts` `headline` and `HIGHLIGHTS` |
 | Contact page copy | `constants/contact.ts` |

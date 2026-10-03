@@ -1,13 +1,14 @@
 import type { Viewport } from "next";
-import { Geist } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { personJsonLd, siteMetadata } from "@/lib/seo";
 import { THEME_COLORS, themeScript } from "@/lib/theme";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// The whole site is set in one monospace face: it's the brand, so it's preloaded.
+const mono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 });
 
@@ -39,7 +40,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body
-        className={`${geistSans.variable} antialiased`}
+        className={`${mono.variable} antialiased`}
       >
         <script
           type="application/ld+json"
@@ -47,13 +48,14 @@ export default function RootLayout({
         />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-[max(1rem,env(safe-area-inset-left))] focus:top-[max(1rem,env(safe-area-inset-top))] focus:z-[60] focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
         >
           Skip to content
         </a>
-        <div className="min-h-svh w-full bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground flex flex-col">
+        <div className="relative isolate min-h-svh w-full bg-background text-foreground font-mono selection:bg-highlight selection:text-highlight-foreground flex flex-col">
+          <div aria-hidden className="bg-texture pointer-events-none fixed inset-0 -z-10" />
           <Header />
-          <main id="main" tabIndex={-1} className="flex-1 container mx-auto gutter py-8 md:py-12 short:py-6 max-w-5xl outline-hidden">
+          <main id="main" tabIndex={-1} className="flex-1 outline-hidden">
             {children}
           </main>
           <Footer />

@@ -16,12 +16,11 @@ export const ThemeToggle = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       onClick={toggleTheme}
       aria-label="Dark mode"
       aria-pressed={isDark}
-      className="rounded-full"
     >
       <span className="relative size-4">
         <Sun

@@ -1,33 +1,56 @@
 import Link from 'next/link';
+import { Github } from 'lucide-react';
 import { NavLinks } from '@/components/layout/NavLinks';
 import { ThemeToggle } from '@/components/layout/ThemeToggle';
+import { buttonClasses } from '@/components/ui/Button';
+import { Logo } from '@/components/ui/Logo';
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { PAGES } from '@/constants/pages';
-import { PROFILE } from '@/constants/profile';
+import { PROFILE, SOCIAL_LINKS } from '@/constants/profile';
 
 // Only what the client needs: descriptions stay on the server.
 const NAV_ITEMS = PAGES.map(({ path, navLabel }) => ({ path, label: navLabel }));
+const GITHUB = SOCIAL_LINKS.find((link) => link.id === 'github')!;
 
+// The header is `fixed`, not `sticky`: Safari's rubber-band bounce drags a
+// sticky header along with the page, while a fixed one stays put. Being fixed,
+// it takes no room in the flow, so a spacer of the same height holds its place.
 export const Header = () => {
   return (
-    <header className="sticky top-0 z-50 w-full scroll-edge pt-[env(safe-area-inset-top)] bg-background/95 supports-backdrop-filter:bg-background/70 backdrop-blur-xl backdrop-saturate-150 reduce-transparency:bg-background reduce-transparency:backdrop-blur-none contrast-more:bg-background">
-      <div className="gutter container mx-auto flex flex-col gap-2 py-2 md:flex-row md:gap-0 md:py-0 short:flex-row short:py-1 min-h-16 short:min-h-12 items-center justify-between">
-        <Link
-          href="/"
-          className="flex items-center gap-2 rounded-lg font-bold text-xl tracking-tight select-none transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <span className="size-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground">
-            TN
-          </span>
-          <span>{PROFILE.name}</span>
-        </Link>
+    <>
+      <div aria-hidden className="h-[calc(var(--header-h)+env(safe-area-inset-top,0px)+1px)] shrink-0 print:hidden" />
+      <header className="fixed inset-x-0 top-0 z-50 border-b scroll-progress pt-[env(safe-area-inset-top)] bg-background/90 supports-backdrop-filter:bg-background/75 backdrop-blur-xl reduce-transparency:bg-background reduce-transparency:backdrop-blur-none contrast-more:bg-background">
+        {/* Phones: logo and icons on the first row, the nav centred on its own row below.
+            From md (and on landscape phones) it's one row: a grid with two equal
+            side columns, so the nav sits at the exact centre of the page. */}
+        <div className="frame gutter flex flex-wrap items-center justify-between gap-x-8 gap-y-0 content-center md:grid md:grid-cols-[1fr_auto_1fr] short:grid short:grid-cols-[1fr_auto_1fr] h-(--header-h)">
+          <Link
+            href="/"
+            className="justify-self-start text-2xl select-none pointer-coarse:py-1.5 transition-[scale] duration-150 ease-out motion-safe:active:scale-[0.97] focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Logo />
+            <span className="sr-only"> · {PROFILE.name}, home</span>
+          </Link>
 
-        <nav aria-label="Main" className="flex items-center gap-2">
-          <NavLinks items={NAV_ITEMS} />
-          <div className="pl-2 border-l border-border">
+          <nav aria-label="Main" className="order-last w-full md:order-none md:w-auto short:order-none short:w-auto">
+            <NavLinks items={NAV_ITEMS} />
+          </nav>
+
+          <div className="flex items-center gap-2 justify-self-end">
+            <a
+              href={GITHUB.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClasses('outline', 'icon')}
+            >
+              <Github aria-hidden className="size-4" />
+              <span className="sr-only">{GITHUB.label}</span>
+              <NewTabHint />
+            </a>
             <ThemeToggle />
           </div>
-        </nav>
-      </div>
-    </header>
+        </div>
+      </header>
+    </>
   );
 };

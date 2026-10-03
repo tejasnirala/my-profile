@@ -3,10 +3,10 @@ import { PAGES } from "@/constants/pages";
 import { PROFILE } from "@/constants/profile";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  // No lastModified: every URL would get the build time, which tells crawlers
+  // nothing (they learn to ignore it).
   const routes = PAGES.map(({ path }) => ({
     url: path === "/" ? PROFILE.url : `${PROFILE.url}${path}`,
-    lastModified: now,
     changeFrequency: "monthly" as const,
     priority: path === "/" ? 1 : 0.8,
   }));
@@ -15,7 +15,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...routes,
     {
       url: `${PROFILE.url}/Tejas_Nirala_Resume.pdf`,
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.6,
     },

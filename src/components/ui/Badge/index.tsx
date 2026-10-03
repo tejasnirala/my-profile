@@ -2,21 +2,21 @@ import React from 'react';
 
 type BadgeProps = {
   children: React.ReactNode;
-  variant?: "default" | "secondary" | "outline";
+  variant?: "brand" | "outline";
+  /** Uppercase caps label (default). Off for names that read better as written, e.g. skills. */
+  caps?: boolean;
   className?: string;
 };
 
-// Badges are labels, not controls, so they get no hover or focus styles.
-// Small text gets slightly positive tracking for legibility.
-export const Badge = ({ children, variant = "default", className = "" }: BadgeProps) => {
-  const variants = {
-    default: "border-transparent bg-primary text-primary-foreground",
-    secondary: "border-transparent bg-secondary text-secondary-foreground",
-    outline: "text-foreground",
-  };
-  return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-[0.01em] ${variants[variant]} ${className}`}>
-      {children}
-    </span>
-  );
+const variants = {
+  brand: "border-brand/40 bg-background/60 text-brand font-semibold",
+  outline: "border-border bg-background/60 text-muted-foreground",
 };
+
+// Badges are labels, not controls, so they get no hover or focus styles.
+// Caps use the shared `label-caps` size and tracking, like card kickers.
+export const Badge = ({ children, variant = "outline", caps = true, className = "" }: BadgeProps) => (
+  <span className={`inline-flex items-center border px-2 py-1 ${caps ? "label-caps" : "text-xs"} ${variants[variant]} ${className}`}>
+    {children}
+  </span>
+);

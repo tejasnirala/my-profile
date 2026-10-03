@@ -23,7 +23,7 @@ const placeIndicator = (nav: HTMLElement, indicator: HTMLElement, animate: boole
   const left = active.offsetLeft;
   const right = nav.clientWidth - left - active.offsetWidth;
   indicator.style.transition = animate ? '' : 'none';
-  indicator.style.clipPath = `inset(0 ${right}px 0 ${left}px round var(--radius-md))`;
+  indicator.style.clipPath = `inset(0 ${right}px 0 ${left}px)`;
   indicator.style.opacity = '1';
   // Hand the active background from the link (server-rendered fallback) to the pill.
   nav.dataset.ready = '';
@@ -53,11 +53,11 @@ export const NavLinks = ({ items }: NavLinksProps) => {
   }, []);
 
   return (
-    <div ref={navRef} className="group relative flex items-center gap-1 sm:gap-2">
+    <div ref={navRef} className="group relative flex items-center gap-0.5 sm:gap-1 max-md:justify-center">
       <span
         ref={indicatorRef}
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-md bg-secondary opacity-0 transition-[clip-path] duration-250 ease-in-out motion-reduce:transition-none"
+        className="pointer-events-none absolute inset-0 bg-secondary opacity-0 transition-[clip-path] duration-250 ease-in-out motion-reduce:transition-none"
       />
       {items.map((item) => (
         <Link
@@ -70,7 +70,7 @@ export const NavLinks = ({ items }: NavLinksProps) => {
             // Inactive links are muted and the active one is full-contrast, so the
             // current page isn't signalled by the faint pill alone (WCAG 1.4.11);
             // forced-colors mode drops backgrounds, so it gets an underline.
-            'relative px-2.5 text-xs sm:px-3 sm:text-sm text-muted-foreground hover:text-foreground aria-[current=page]:bg-secondary aria-[current=page]:text-foreground forced-colors:aria-[current=page]:underline group-data-ready:aria-[current=page]:bg-transparent',
+            'relative px-2.5 text-[0.8125rem] sm:px-3 sm:text-sm text-muted-foreground hover:text-foreground aria-[current=page]:bg-secondary aria-[current=page]:text-foreground forced-colors:aria-[current=page]:underline group-data-ready:aria-[current=page]:bg-transparent',
           )}
         >
           {item.label}

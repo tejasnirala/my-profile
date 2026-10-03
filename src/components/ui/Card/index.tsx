@@ -4,10 +4,17 @@ type CardProps = {
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  /** `featured` gets the warm tint and orange edge, for the one card that leads a group. */
+  variant?: "default" | "featured";
 };
 
-export const Card = ({ children, className = "", style }: CardProps) => (
-  <div className={`rounded-xl border bg-card text-card-foreground shadow-sm ${className}`} style={style}>
+const cardVariants = {
+  default: "border-border bg-card/70",
+  featured: "border-brand/40 bg-brand/[0.06]",
+};
+
+export const Card = ({ children, className = "", style, variant = "default" }: CardProps) => (
+  <div className={`border text-card-foreground ${cardVariants[variant]} ${className}`} style={style}>
     {children}
   </div>
 );
@@ -18,7 +25,24 @@ type CardHeaderProps = {
 };
 
 export const CardHeader = ({ children, className = "" }: CardHeaderProps) => (
-  <div className={`flex flex-col space-y-1.5 p-6 ${className}`}>{children}</div>
+  <div className={`flex flex-col gap-3 p-6 ${className}`}>{children}</div>
+);
+
+type CardKickerProps = {
+  /** Zero-based position in the list; shown one-based and padded in orange ("01"). */
+  index?: number;
+  label: string;
+  className?: string;
+};
+
+/** The small numbered caps line above a card title: "01  PR REVIEWS". */
+export const CardKicker = ({ index, label, className = "" }: CardKickerProps) => (
+  <p className={`label-caps flex items-center gap-3 text-muted-foreground ${className}`}>
+    {index !== undefined && (
+      <span className="font-bold tracking-normal text-brand">{String(index + 1).padStart(2, "0")}</span>
+    )}
+    {label}
+  </p>
 );
 
 type CardTitleProps = {
@@ -29,7 +53,7 @@ type CardTitleProps = {
 };
 
 export const CardTitle = ({ children, className = "", as: Heading = "h3" }: CardTitleProps) => (
-  <Heading className={`text-2xl font-semibold leading-tight tracking-[-0.015em] ${className}`}>{children}</Heading>
+  <Heading className={`text-lg font-bold leading-snug tracking-[-0.01em] ${className}`}>{children}</Heading>
 );
 
 type CardDescriptionProps = {
@@ -38,24 +62,5 @@ type CardDescriptionProps = {
 };
 
 export const CardDescription = ({ children, className = "" }: CardDescriptionProps) => (
-  <p className={`text-sm text-muted-foreground ${className}`}>{children}</p>
+  <p className={`text-sm leading-relaxed text-muted-foreground ${className}`}>{children}</p>
 );
-
-type CardContentProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-export const CardContent = ({ children, className = "" }: CardContentProps) => (
-  <div className={`p-6 pt-0 ${className}`}>{children}</div>
-);
-
-type CardFooterProps = {
-  children: React.ReactNode;
-  className?: string;
-};
-
-export const CardFooter = ({ children, className = "" }: CardFooterProps) => (
-  <div className={`flex items-center p-6 pt-0 ${className}`}>{children}</div>
-);
-
