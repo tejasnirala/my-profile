@@ -4,4 +4,9 @@ export const CONTACT = {
   cardTitle: "Contact Details",
   cardDescription: "Feel free to reach out through any of these platforms.",
   closing: "Looking forward to building something amazing together.",
+  /** The closing call-to-action box on the home page. */
+  cta: {
+    title: "Let's build something together",
+    body: "Open to full-time roles and freelance work. One email is all it takes.",
+  },
 };
