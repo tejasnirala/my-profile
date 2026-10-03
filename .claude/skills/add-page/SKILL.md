@@ -17,30 +17,38 @@ Keep data in constants, not in JSX.
 
 ## 2. Section: `src/components/sections/UsesSection/index.tsx`
 ```tsx
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
+import { Card, CardHeader, CardKicker, CardTitle } from '@/components/ui/Card';
+import { Section } from '@/components/ui/Section';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 import { USES } from '@/constants/uses';
 import { stagger } from '@/lib/motion';
 
 export const UsesSection = () => {
   return (
-    <div className="space-y-8">
-      <div className="enter flex flex-col space-y-2" style={stagger(0)}>
-        <h1 className="text-3xl font-bold tracking-tight">Uses</h1>
-        <p className="text-muted-foreground">Tools and setup I work with.</p>
-      </div>
-      <ul role="list" className="enter grid gap-6 sm:grid-cols-2" style={stagger(1)}>
-        {USES.map((group) => (
+    <Section innerClassName="space-y-10 pt-10 md:pt-16">
+      <SectionHeader
+        as="h1"
+        eyebrow="uses"
+        title="Tools I"
+        emphasis="work with."
+        intro="Tools and setup I work with."
+        className="enter"
+        style={stagger(0)}
+      />
+      <ul role="list" className="enter grid gap-4 md:grid-cols-2" style={stagger(1)}>
+        {USES.map((group, index) => (
           <li key={group.category} className="reveal">
-            <Card>
+            <Card className="h-full">
               <CardHeader>
+                <CardKicker index={String(index + 1).padStart(2, '0')} label={`${group.items.length} tools`} />
                 <CardTitle as="h2">{group.category}</CardTitle>
+                {/* items */}
               </CardHeader>
-              <CardContent>{/* items */}</CardContent>
             </Card>
           </li>
         ))}
       </ul>
-    </div>
+    </Section>
   );
 };
 ```

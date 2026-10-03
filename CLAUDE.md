@@ -6,7 +6,7 @@ Fully static: every route is prerendered (SSG) and the site works offline as a P
 ## Stack
 - **Next.js 16** (App Router) · **React 19.2** with the **React Compiler** on (`reactCompiler: true`)
 - **TypeScript** (strict) · **Tailwind CSS v4** (CSS-first config, no `tailwind.config`)
-- **Serwist** service worker (`@serwist/next`) · **lucide-react** icons · Geist fonts via `next/font`
+- **Serwist** service worker (`@serwist/next`) · **lucide-react** icons · JetBrains Mono via `next/font`
 - No backend, no API routes, no database, no tests.
 
 ## Commands
@@ -39,7 +39,7 @@ src/
 ├── components/
 │   ├── layout/           Header, Footer, NavLinks (client), ThemeToggle (client)
 │   ├── sections/         One section per page: About, Resume, Projects, Contact
-│   └── ui/               Tiny local primitives: Button (+ buttonClasses), Card, Badge, Separator, TimelineItem
+│   └── ui/               Tiny local primitives: Button (+ buttonClasses), Card (+ CardKicker), Badge, Section, SectionHeader, CommandLine (+ CopyButton, client), Logo, TimelineItem
 ├── constants/            ALL site content: profile (+ SOCIAL_LINKS, HIGHLIGHTS), experience (+ FEATURED_PROJECTS), education, certification, hobbies, contact, pages (the page registry)
 └── lib/
     ├── seo.ts            Search + social: siteMetadata, pageMetadata(id), personJsonLd, and build-time SEO checks
@@ -51,7 +51,7 @@ public/                   Resume PDF, certificate images/PDFs
 **Data flow:** `constants/*` → `components/sections/*` → `app/<route>/page.tsx`. Each `page.tsx` only exports `metadata = pageMetadata('<id>')` and renders its section. `constants/pages.ts` is the single list of pages; nav and sitemap read it too. Content edits almost never need component changes.
 
 ## Key conventions
-- **Server components by default.** Only `NavLinks` and `ThemeToggle` are `"use client"`. To style a link as a button, use `buttonClasses()` on an `<a>`/`<Link>` instead of `<Button>`, so the component stays server-rendered.
+- **Server components by default.** Only `NavLinks`, `ThemeToggle` and `CopyButton` are `"use client"`. To style a link as a button, use `buttonClasses()` on an `<a>`/`<Link>` instead of `<Button>`, so the component stays server-rendered.
 - **React Compiler handles memoization.** Don't add `useMemo`, `useCallback` or `React.memo`.
 - **Colors come from semantic tokens** (`bg-background`, `text-muted-foreground`, `border-border`, `bg-primary`…) defined in `globals.css`. Never hardcode colors in components. The only exception is `next/og` image files, which need inline styles and hex values.
 - **Components:** one folder per component with `index.tsx`, a named arrow-function export (`export const X = () =>`), props typed as `type XProps = {…}`, and `className` merged with template strings (there's no `clsx`/`cn`).
@@ -59,8 +59,9 @@ public/                   Resume PDF, certificate images/PDFs
 - **Quotes:** match the file you're in (components use single quotes; app/config files use double quotes).
 - **Canonical URL:** always derive URLs from `PROFILE.url`. Never hardcode the domain.
 - **`vercel-react-best-practices` skill** (installed via `npx skills`, tracked in `skills-lock.json`): use it for performance guidance, but this file wins on conflicts. Skip its `rerender-memo*`/`useMemo`/`useCallback` advice (the React Compiler does this) and its data-fetching/SWR/server-action rules (the site is static with no data fetching).
-- **Design/motion skills** (`emil-design-eng`, `animate`, `review-animations`, `apple-design`, etc. from `emilkowalski/skills`): prefer CSS transitions/WAAPI over adding a motion library, keep animated pieces as small client leaves, and respect `prefers-reduced-motion`. The motion system already exists, so extend it rather than adding a parallel one: easing tokens in `globals.css`, the `enter`/`reveal`/`scroll-edge` utilities, press feedback in `buttonClasses`, the clip-path nav pill in `NavLinks`, and the View Transition theme crossfade in `lib/theme.ts`. See `.claude/rules/components.md` for the class patterns. `/prototype` routes (`src/app/prototypes/**`) are temporary: never commit them or add them to the sitemap. Any library `/pick-ui-library` suggests is installed with `pnpm add`.
-- **Fonts:** Geist is used deliberately as the brand face (Apple's guidance defaults to the system font unless there's a reason). It's loaded through `next/font`, so it's self-hosted, preloaded and has no layout shift.
+- **Design/motion skills** (`emil-design-eng`, `animate`, `review-animations`, `apple-design`, etc. from `emilkowalski/skills`): prefer CSS transitions/WAAPI over adding a motion library, keep animated pieces as small client leaves, and respect `prefers-reduced-motion`. The motion system already exists, so extend it rather than adding a parallel one: easing tokens in `globals.css`, the `enter`/`reveal`/`scroll-progress` utilities, press feedback in `buttonClasses`, the clip-path nav pill in `NavLinks`, and the View Transition theme crossfade in `lib/theme.ts`. See `.claude/rules/components.md` for the class patterns. `/prototype` routes (`src/app/prototypes/**`) are temporary: never commit them or add them to the sitemap. Any library `/pick-ui-library` suggests is installed with `pnpm add`.
+- **Fonts:** the whole site is set in JetBrains Mono, deliberately: the monospace, developer-tool look is the brand. It's loaded through `next/font`, so it's self-hosted, preloaded and has no layout shift. The `--font-mono` token lives in `@theme inline` because next/font defines its variable on `<body>`, not `:root`; a plain `@theme` token would resolve to nothing and fall back to sans-serif.
+- **Visual language** (modelled on px0.ai): square corners (`--radius: 0`), hairline borders, a fixed `bg-texture` (grid + scanlines) behind the page, full-width `Section` bands divided by hairlines, `// eyebrow` + headline with an orange second half (`SectionHeader`), numbered caps kickers on cards (`CardKicker`), `brand` orange for accents, `highlight` amber for the one primary action per view, `logo` amber for the wordmark brackets, and an oversized faded wordmark closing the footer.
 - **App icons:** `lib/brand-mark.tsx` draws the "TN" badge for `icon.tsx`, `apple-icon.tsx` and the PWA icons (`app/pwa-icon/[variant]`: 192, 512 and a maskable 512 listed in `manifest.ts`). Change the mark there.
 - **Responsive targets:** phones and tablets in portrait and landscape, plus desktop. `short:` is a custom variant for landscape phones (wide but under 32rem tall); `pointer-coarse:` gives 44px touch targets; `gutter` clears the notch.
 
